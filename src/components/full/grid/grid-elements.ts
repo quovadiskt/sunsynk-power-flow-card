@@ -160,7 +160,10 @@ export const renderGridElements = (
 						showNonessential,
 					'st3 right-align',
 					data.dynamicColourNonEssentialLoad3,
-					`${data.stateNonEssentialLoad3Extra.toNum(1)} ${data.stateNonEssentialLoad3Extra?.getUOM()}`,
+					`${Utils.formatNumberLocale(
+						data.stateNonEssentialLoad3Extra.toNum(1),
+						1,
+					)} ${data.stateNonEssentialLoad3Extra?.getUOM()}`,
 					(e) =>
 						Utils.handlePopup(e, config.entities.non_essential_load3_extra),
 				)}
@@ -659,7 +662,10 @@ export const renderGridElements = (
 													auto_scale
 														? `${
 																config.grid.show_absolute
-																	? `${Math.abs(parseFloat(Utils.convertValue(totalGridPower, decimalPlaces)))} ${Utils.convertValue(totalGridPower, decimalPlaces).split(' ')[1]}`
+																	? Utils.convertValue(
+																			Math.abs(totalGridPower),
+																			decimalPlaces,
+																		) || '0'
 																	: Utils.convertValue(
 																			totalGridPower,
 																			decimalPlaces,
@@ -688,7 +694,10 @@ export const renderGridElements = (
 													auto_scale
 														? `${
 																config.grid.show_absolute
-																	? `${Math.abs(parseFloat(Utils.convertValue(totalGridPower, decimalPlaces)))} ${Utils.convertValue(totalGridPower, decimalPlaces).split(' ')[1]}`
+																	? Utils.convertValue(
+																			Math.abs(totalGridPower),
+																			decimalPlaces,
+																		) || '0'
 																	: Utils.convertValue(
 																			totalGridPower,
 																			decimalPlaces,
@@ -712,7 +721,10 @@ export const renderGridElements = (
 											auto_scale
 												? `${
 														config.grid.show_absolute
-															? `${Math.abs(parseFloat(Utils.convertValue(totalGridPower, decimalPlaces)))} ${Utils.convertValue(totalGridPower, decimalPlaces).split(' ')[1]}`
+															? Utils.convertValue(
+																	Math.abs(totalGridPower),
+																	decimalPlaces,
+																) || '0'
 															: Utils.convertValue(
 																	totalGridPower,
 																	decimalPlaces,
@@ -774,7 +786,7 @@ export const renderGridElements = (
 													),
 													'st3 right-align',
 													gridColour,
-													`${data.energyCost} ${data.stateEnergyCostBuy?.getUOM()}`,
+													`${Utils.formatNumberLocale(data.energyCost, 2)} ${data.stateEnergyCostBuy?.getUOM()}`,
 												)}
                         ${renderText(
 													'energy_cost',
@@ -787,7 +799,7 @@ export const renderGridElements = (
 													),
 													three_phase ? 'st3 right-align' : 'st3 left-align',
 													gridColour,
-													`${data.energyCost}`,
+													`${Utils.formatNumberLocale(data.energyCost, 2)}`,
 												)}
                         ${renderText(
 													'energy_cost',
@@ -816,7 +828,7 @@ export const renderGridElements = (
 													),
 													'st3 right-align',
 													gridColour,
-													`${data.energyCost} ${data.stateEnergyCostSell?.getUOM()}`,
+													`${Utils.formatNumberLocale(data.energyCost, 2)} ${data.stateEnergyCostSell?.getUOM()}`,
 												)}
                         ${renderText(
 													'energy_cost',
@@ -829,7 +841,7 @@ export const renderGridElements = (
 													),
 													three_phase ? 'st3 right-align' : 'st3 left-align',
 													gridColour,
-													`${data.energyCost}`,
+													`${Utils.formatNumberLocale(data.energyCost, 2)}`,
 												)}
                         ${renderText(
 													'energy_cost',
@@ -855,7 +867,10 @@ export const renderGridElements = (
 				auto_scale
 					? `${
 							config.grid.show_absolute
-								? `${Math.abs(parseFloat(Utils.convertValue(autoScaledGridPower, decimalPlaces)))} ${Utils.convertValue(autoScaledGridPower, decimalPlaces).split(' ')[1]}`
+								? Utils.convertValue(
+										Math.abs(autoScaledGridPower),
+										decimalPlaces,
+									) || '0'
 								: Utils.convertValue(autoScaledGridPower, decimalPlaces) || 0
 						}`
 					: `${
@@ -873,7 +888,7 @@ export const renderGridElements = (
 				!data.statePrepaidUnits.isValid(),
 				config.entities?.prepaid_units ? 'st3 left-align' : 'st12',
 				gridColour,
-				data.statePrepaidUnits.toNum(1).toString(),
+				Utils.formatNumberLocale(data.statePrepaidUnits.toNum(1), 1),
 				(e) => Utils.handlePopup(e, config.entities.prepaid_units),
 				true,
 			)}
@@ -921,7 +936,10 @@ export const renderGridElements = (
 					!config.entities.inverter_voltage_154,
 				`${largeFont !== true ? 'st14' : 'st4'} st8`,
 				gridColour,
-				`${data.inverterVoltage} ${UnitOfElectricPotential.VOLT}`,
+				`${Utils.formatNumberLocale(
+					data.inverterVoltage,
+					1,
+				)} ${UnitOfElectricPotential.VOLT}`,
 				(e) => Utils.handlePopup(e, config.entities.inverter_voltage_154),
 				true,
 			)}
@@ -932,7 +950,10 @@ export const renderGridElements = (
 				!!(three_phase && config.entities?.inverter_voltage_L2),
 				largeFont !== true ? 'st14 st8' : 'st4 st8',
 				gridColour,
-				`${data.inverterVoltageL2} ${UnitOfElectricPotential.VOLT}`,
+				`${Utils.formatNumberLocale(
+					data.inverterVoltageL2,
+					1,
+				)} ${UnitOfElectricPotential.VOLT}`,
 				(e) => Utils.handlePopup(e, config.entities.inverter_voltage_L2),
 			)}
 			${createTextWithPopup(
@@ -942,7 +963,10 @@ export const renderGridElements = (
 				!!(three_phase && config.entities?.inverter_voltage_L3),
 				largeFont !== true ? 'st14 st8' : 'st4 st8',
 				gridColour,
-				`${data.inverterVoltageL3} ${UnitOfElectricPotential.VOLT}`,
+				`${Utils.formatNumberLocale(
+					data.inverterVoltageL3,
+					1,
+				)} ${UnitOfElectricPotential.VOLT}`,
 				(e) => Utils.handlePopup(e, config.entities.inverter_voltage_L3),
 			)}
 			${createTextWithPopup(
@@ -953,7 +977,7 @@ export const renderGridElements = (
 					!config.entities.load_frequency_192,
 				`${largeFont !== true ? 'st14' : 'st4'} st8`,
 				gridColour,
-				`${data.loadFrequency} Hz`,
+				`${Utils.formatNumberLocale(data.loadFrequency, 2)} Hz`,
 				(e) => Utils.handlePopup(e, config.entities.load_frequency_192),
 				true,
 			)}
@@ -1007,7 +1031,10 @@ export const renderGridElements = (
 					showNonessential,
 				'st3 right-align',
 				data.dynamicColourNonEssentialLoad1,
-				`${data.stateNonEssentialLoad1Extra.toNum(1)} ${data.stateNonEssentialLoad1Extra?.getUOM()}`,
+				`${Utils.formatNumberLocale(
+					data.stateNonEssentialLoad1Extra.toNum(1),
+					1,
+				)} ${data.stateNonEssentialLoad1Extra?.getUOM()}`,
 				(e) => Utils.handlePopup(e, config.entities.non_essential_load1_extra),
 			)}
 			${createTextWithPopup(
@@ -1021,7 +1048,10 @@ export const renderGridElements = (
 					showNonessential,
 				'st3 left-align',
 				data.dynamicColourNonEssentialLoad2,
-				`${data.stateNonEssentialLoad2Extra.toNum(1)} ${data.stateNonEssentialLoad2Extra?.getUOM()}`,
+				`${Utils.formatNumberLocale(
+					data.stateNonEssentialLoad2Extra.toNum(1),
+					1,
+				)} ${data.stateNonEssentialLoad2Extra?.getUOM()}`,
 				(e) => Utils.handlePopup(e, config.entities.non_essential_load2_extra),
 			)}
 		</svg>

@@ -27,6 +27,9 @@ import { Linky } from './brands/linky';
 import { Ferroamp } from './brands/ferroamp';
 import { Easun } from './brands/easun';
 import { Solinteg } from './brands/solinteg';
+import { DeyeNew } from './brands/deye-new';
+import { Chisage } from './brands/chisage';
+import { SRNEHES } from './brands/srnehes';
 
 export class InverterFactory {
 	static instance: InverterSettingsDto;
@@ -40,6 +43,10 @@ export class InverterFactory {
 
 	private static createInstance(brand: InverterModel): InverterSettingsDto {
 		switch (brand) {
+			case InverterModel.SRNEHES:
+				return new SRNEHES();
+			case InverterModel.Chisage:
+				return new Chisage();
 			case InverterModel.Sigenergy:
 				return new Sigenergy();
 			case InverterModel.Linky:
@@ -80,6 +87,8 @@ export class InverterFactory {
 				return new SolarEdge();
 			case InverterModel.Deye:
 				return new Deye();
+			case InverterModel.DeyeNew:
+				return new DeyeNew();
 			case InverterModel.PowMr:
 				return new PowMr();
 			case InverterModel.MPPSolar:

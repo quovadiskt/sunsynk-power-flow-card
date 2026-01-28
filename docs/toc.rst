@@ -9,11 +9,13 @@
    :titlesonly:
 
    examples/sunsynk
+   examples/ecoflow
    examples/foxess
    examples/goodwe
    examples/huawei
    examples/lux
    examples/powmr
+   examples/sigenergy
    examples/solax
    examples/solis
    examples/victron
