@@ -29,6 +29,7 @@ export const renderAuxLoadElements = (
 	} = data;
 
 	const { auto_scale } = config.load;
+	const entities = config.entities ?? {};
 
 	return html`
 		<!-- Aux Load Elements -->
@@ -197,8 +198,7 @@ export const renderAuxLoadElements = (
 			<!-- Aux Icon -->
 			<a
 				href="#"
-				@click=${(e) =>
-					Utils.handlePopup(e, config.entities.aux_connected_status)}
+				@click=${(e) => Utils.handlePopup(e, entities.aux_connected_status)}
 			>
 				${guard(
 					[
@@ -296,10 +296,10 @@ export const renderAuxLoadElements = (
 				'st10 left-align',
 				auxDynamicColour,
 				data.stateDayAuxEnergy.toPowerString(true, data.decimalPlacesEnergy),
-				(e) => Utils.handlePopup(e, config.entities.day_aux_energy),
+				(e) => Utils.handlePopup(e, entities.day_aux_energy),
 				true,
 			)}
-			${config.entities?.aux_power_166
+			${entities?.aux_power_166
 				? svg`
                     ${createTextWithPopup(
 											'aux_power_166',
@@ -320,8 +320,7 @@ export const renderAuxLoadElements = (
 															? `${Math.abs(auxPower)}`
 															: auxPower || 0
 													} ${UnitOfPower.WATT}`,
-											(e) =>
-												Utils.handlePopup(e, config.entities.aux_power_166),
+											(e) => Utils.handlePopup(e, entities.aux_power_166),
 											true,
 										)}`
 				: svg`
@@ -354,7 +353,7 @@ export const renderAuxLoadElements = (
 				`${largeFont !== true ? 'st14' : 'st4'} st8`,
 				data.auxDynamicColourLoad1,
 				data.stateAuxLoad1.toPowerString(auto_scale, decimalPlaces),
-				(e) => Utils.handlePopup(e, config.entities.aux_load1),
+				(e) => Utils.handlePopup(e, entities.aux_load1),
 				true,
 			)}
 			${createTextWithPopup(
@@ -367,7 +366,7 @@ export const renderAuxLoadElements = (
 				`${largeFont !== true ? 'st14' : 'st4'} st8`,
 				data.auxDynamicColourLoad2,
 				data.stateAuxLoad2.toPowerString(auto_scale, decimalPlaces),
-				(e) => Utils.handlePopup(e, config.entities.aux_load2),
+				(e) => Utils.handlePopup(e, entities.aux_load2),
 				true,
 			)}
 			${createTextWithPopup(
@@ -376,7 +375,7 @@ export const renderAuxLoadElements = (
 				8,
 				!showAux ||
 					[1, 2].includes(additionalAuxLoad) ||
-					!config.entities.aux_load1_extra,
+					!entities.aux_load1_extra,
 				'st3 st8',
 				auxStatus === 'on' || auxStatus === '1'
 					? auxDynamicColour
@@ -385,7 +384,7 @@ export const renderAuxLoadElements = (
 					data.stateAuxLoad1Extra.toNum(1),
 					1,
 				)} ${data.stateAuxLoad1Extra?.getUOM()}`,
-				(e) => Utils.handlePopup(e, config.entities.aux_load1_extra),
+				(e) => Utils.handlePopup(e, entities.aux_load1_extra),
 				true,
 			)}
 			${createTextWithPopup(
@@ -394,14 +393,14 @@ export const renderAuxLoadElements = (
 				14,
 				showAux &&
 					[1, 2].includes(additionalAuxLoad) &&
-					config.entities.aux_load1_extra,
+					entities.aux_load1_extra,
 				'st3 st8',
 				data.auxDynamicColourLoad1,
 				`${Utils.formatNumberLocale(
 					data.stateAuxLoad1Extra.toNum(1),
 					1,
 				)} ${data.stateAuxLoad1Extra?.getUOM()}`,
-				(e) => Utils.handlePopup(e, config.entities.aux_load1_extra),
+				(e) => Utils.handlePopup(e, entities.aux_load1_extra),
 			)}
 			${createTextWithPopup(
 				'aux_load2_extra',
@@ -409,14 +408,14 @@ export const renderAuxLoadElements = (
 				83,
 				!showAux ||
 					[0, 1].includes(additionalAuxLoad) ||
-					!config.entities.aux_load2_extra,
+					!entities.aux_load2_extra,
 				'st3 st8',
 				data.auxDynamicColourLoad2,
 				`${Utils.formatNumberLocale(
 					data.stateAuxLoad2Extra.toNum(1),
 					1,
 				)} ${data.stateAuxLoad2Extra?.getUOM()}`,
-				(e) => Utils.handlePopup(e, config.entities.aux_load2_extra),
+				(e) => Utils.handlePopup(e, entities.aux_load2_extra),
 				true,
 			)}
 		</svg>

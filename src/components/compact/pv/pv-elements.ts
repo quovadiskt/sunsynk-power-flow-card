@@ -29,6 +29,7 @@ export const renderSolarElements = (
 
 	const { auto_scale, efficiency, mppts, display_mode, invert_flow } =
 		config.solar;
+	const entities = config.entities ?? {};
 
 	return html`
 		<!-- Solar Elements -->
@@ -87,8 +88,8 @@ export const renderSolarElements = (
 					'pv5_voltage',
 					120,
 					106,
-					!config.entities.pv5_voltage ||
-						config.entities.pv5_voltage === 'none' ||
+					!entities.pv5_voltage ||
+						entities.pv5_voltage === 'none' ||
 						!data.statePV5Voltage.isValid(),
 					'st3 left-align',
 					solarColour,
@@ -96,15 +97,15 @@ export const renderSolarElements = (
 						data.statePV5Voltage.toNum(1),
 						1,
 					)} ${UnitOfElectricPotential.VOLT}`,
-					(e) => Utils.handlePopup(e, config.entities.pv5_voltage),
+					(e) => Utils.handlePopup(e, entities.pv5_voltage),
 					true,
 				)}
 				${createTextWithPopup(
 					'pv5_current',
 					120,
 					94,
-					!config.entities.pv5_current ||
-						config.entities.pv5_current === 'none' ||
+					!entities.pv5_current ||
+						entities.pv5_current === 'none' ||
 						!data.statePV5Current.isValid(),
 					'st3 left-align',
 					solarColour,
@@ -112,7 +113,7 @@ export const renderSolarElements = (
 						data.statePV5Current.toNum(1),
 						1,
 					)} ${UnitOfElectricalCurrent.AMPERE}`,
-					(e) => Utils.handlePopup(e, config.entities.pv5_current),
+					(e) => Utils.handlePopup(e, entities.pv5_current),
 					true,
 				)}
 				${createTextWithPopup(
@@ -125,7 +126,7 @@ export const renderSolarElements = (
 					auto_scale
 						? `${Utils.convertValue(data.pv5PowerWatts, decimalPlaces) || 0}`
 						: `${Utils.toNum(data.pv5PowerWatts || 0, 0)} ${UnitOfPower.WATT}`,
-					(e) => Utils.handlePopup(e, config.entities.pv5_power),
+					(e) => Utils.handlePopup(e, entities.pv5_power),
 					true,
 				)}
 			</svg>
@@ -172,8 +173,8 @@ export const renderSolarElements = (
 					'pv6_voltage',
 					372,
 					106,
-					!config.entities.pv6_voltage ||
-						config.entities.pv6_voltage === 'none' ||
+					!entities.pv6_voltage ||
+						entities.pv6_voltage === 'none' ||
 						!data.statePV6Voltage.isValid(),
 					'st3 left-align',
 					solarColour,
@@ -181,15 +182,15 @@ export const renderSolarElements = (
 						data.statePV6Voltage.toNum(1),
 						1,
 					)} ${UnitOfElectricPotential.VOLT}`,
-					(e) => Utils.handlePopup(e, config.entities.pv6_voltage),
+					(e) => Utils.handlePopup(e, entities.pv6_voltage),
 					true,
 				)}
 				${createTextWithPopup(
 					'pv6_current',
 					372,
 					94,
-					!config.entities.pv6_current ||
-						config.entities.pv6_current === 'none' ||
+					!entities.pv6_current ||
+						entities.pv6_current === 'none' ||
 						!data.statePV6Current.isValid(),
 					'st3 left-align',
 					solarColour,
@@ -197,7 +198,7 @@ export const renderSolarElements = (
 						data.statePV6Current.toNum(1),
 						1,
 					)} ${UnitOfElectricalCurrent.AMPERE}`,
-					(e) => Utils.handlePopup(e, config.entities.pv6_current),
+					(e) => Utils.handlePopup(e, entities.pv6_current),
 					true,
 				)}
 				${createTextWithPopup(
@@ -210,7 +211,7 @@ export const renderSolarElements = (
 					auto_scale
 						? `${Utils.convertValue(data.pv6PowerWatts, decimalPlaces) || 0}`
 						: `${Utils.toNum(data.pv6PowerWatts || 0, 0)} ${UnitOfPower.WATT}`,
-					(e) => Utils.handlePopup(e, config.entities.pv6_power),
+					(e) => Utils.handlePopup(e, entities.pv6_power),
 					true,
 				)}
 			</svg>
@@ -405,7 +406,7 @@ export const renderSolarElements = (
                     </svg>`}
 			<a
 				href="#"
-				@click=${(e) => Utils.handlePopup(e, config.entities.solar_sell_247)}
+				@click=${(e) => Utils.handlePopup(e, entities.solar_sell_247)}
 			>
 				<svg
 					id="solar_sell_on"
@@ -416,7 +417,7 @@ export const renderSolarElements = (
 					viewBox="0 0 30 30"
 				>
 					<path
-						display="${!config.entities.solar_sell_247 ||
+						display="${!entities.solar_sell_247 ||
 						data.stateSolarSell.state === 'off' ||
 						data.stateSolarSell.state === '0' ||
 						!config.show_solar ||
@@ -436,7 +437,7 @@ export const renderSolarElements = (
 					viewBox="0 0 30 30"
 				>
 					<path
-						display="${!config.entities.solar_sell_247 ||
+						display="${!entities.solar_sell_247 ||
 						data.stateSolarSell.state === 'on' ||
 						data.stateSolarSell.state === '1' ||
 						!config.show_solar ||
@@ -455,8 +456,8 @@ export const renderSolarElements = (
 				display_mode === 1 && data.stateDayPVEnergy.isValid(),
 				'st10 left-align',
 				!solarShowDaily ? 'transparent' : solarColour,
-				data.stateDayPVEnergy?.toPowerString(true, data.decimalPlacesEnergy),
-				(e) => Utils.handlePopup(e, config.entities.day_pv_energy_108),
+				data.stateDayPVEnergy.toPowerString(true, data.decimalPlacesEnergy),
+				(e) => Utils.handlePopup(e, entities.day_pv_energy_108),
 			)}
 			${createTextWithPopup(
 				'remaining_solar_value',
@@ -465,8 +466,8 @@ export const renderSolarElements = (
 				display_mode === 2 && data.stateDayPVEnergy.isValid(),
 				'st10 left-align',
 				!solarShowDaily ? 'transparent' : solarColour,
-				`${data.stateDayPVEnergy?.toPowerString(true, data.decimalPlacesEnergy)} / ${data.remainingSolar}`,
-				(e) => Utils.handlePopup(e, config.entities.day_pv_energy_108),
+				`${data.stateDayPVEnergy.toPowerString(true, data.decimalPlacesEnergy)} / ${data.remainingSolar}`,
+				(e) => Utils.handlePopup(e, entities.day_pv_energy_108),
 			)}
 			${createTextWithPopup(
 				'total_solar_value',
@@ -475,15 +476,15 @@ export const renderSolarElements = (
 				display_mode === 3 && data.stateDayPVEnergy.isValid(),
 				'st10 left-align',
 				!solarShowDaily ? 'transparent' : solarColour,
-				`${data.stateDayPVEnergy?.toPowerString(true, data.decimalPlacesEnergy)} / ${data.totalSolarGeneration}`,
-				(e) => Utils.handlePopup(e, config.entities.day_pv_energy_108),
+				`${data.stateDayPVEnergy.toPowerString(true, data.decimalPlacesEnergy)} / ${data.totalSolarGeneration}`,
+				(e) => Utils.handlePopup(e, entities.day_pv_energy_108),
 			)}
 			${createTextWithPopup(
 				'pv1_voltage',
 				mppts === 1 ? '244.7' : '194',
 				106,
-				!config.entities.pv1_voltage_109 ||
-					config.entities.pv1_voltage_109 === 'none' ||
+				!entities.pv1_voltage_109 ||
+					entities.pv1_voltage_109 === 'none' ||
 					!data.statePV1Voltage.isValid(),
 				'st3 left-align',
 				solarColour,
@@ -491,15 +492,15 @@ export const renderSolarElements = (
 					data.statePV1Voltage.toNum(1),
 					1,
 				)} ${UnitOfElectricPotential.VOLT}`,
-				(e) => Utils.handlePopup(e, config.entities.pv1_voltage_109),
+				(e) => Utils.handlePopup(e, entities.pv1_voltage_109),
 				true,
 			)}
 			${createTextWithPopup(
 				'pv1_current',
 				mppts === 1 ? '244.7' : '194',
 				94,
-				!config.entities.pv1_current_110 ||
-					config.entities.pv1_current_110 === 'none' ||
+				!entities.pv1_current_110 ||
+					entities.pv1_current_110 === 'none' ||
 					!data.statePV1Current.isValid(),
 				'st3 left-align',
 				solarColour,
@@ -507,15 +508,15 @@ export const renderSolarElements = (
 					data.statePV1Current.toNum(1),
 					1,
 				)} ${UnitOfElectricalCurrent.AMPERE}`,
-				(e) => Utils.handlePopup(e, config.entities.pv1_current_110),
+				(e) => Utils.handlePopup(e, entities.pv1_current_110),
 				true,
 			)}
 			${createTextWithPopup(
 				'pv2_voltage',
 				296,
 				106,
-				!config.entities.pv2_voltage_111 ||
-					config.entities.pv2_voltage_111 === 'none' ||
+				!entities.pv2_voltage_111 ||
+					entities.pv2_voltage_111 === 'none' ||
 					mppts === 1 ||
 					!data.statePV2Voltage.isValid(),
 				'st3 left-align',
@@ -524,15 +525,15 @@ export const renderSolarElements = (
 					data.statePV2Voltage.toNum(1),
 					1,
 				)} ${UnitOfElectricPotential.VOLT}`,
-				(e) => Utils.handlePopup(e, config.entities.pv2_voltage_111),
+				(e) => Utils.handlePopup(e, entities.pv2_voltage_111),
 				true,
 			)}
 			${createTextWithPopup(
 				'pv2_current',
 				296,
 				94,
-				!config.entities.pv2_current_112 ||
-					config.entities.pv2_current_112 === 'none' ||
+				!entities.pv2_current_112 ||
+					entities.pv2_current_112 === 'none' ||
 					mppts === 1 ||
 					!data.statePV2Current.isValid(),
 				'st3 left-align',
@@ -541,15 +542,15 @@ export const renderSolarElements = (
 					data.statePV2Current.toNum(1),
 					1,
 				)} ${UnitOfElectricalCurrent.AMPERE}`,
-				(e) => Utils.handlePopup(e, config.entities.pv2_current_112),
+				(e) => Utils.handlePopup(e, entities.pv2_current_112),
 				true,
 			)}
 			${createTextWithPopup(
 				'pv3_voltage',
 				120,
 				106,
-				!config.entities.pv3_voltage_113 ||
-					config.entities.pv3_voltage_113 === 'none' ||
+				!entities.pv3_voltage_113 ||
+					entities.pv3_voltage_113 === 'none' ||
 					[1, 2].includes(mppts) ||
 					!data.statePV3Voltage.isValid(),
 				'st3 left-align',
@@ -558,15 +559,15 @@ export const renderSolarElements = (
 					data.statePV3Voltage.toNum(1),
 					1,
 				)} ${UnitOfElectricPotential.VOLT}`,
-				(e) => Utils.handlePopup(e, config.entities.pv3_voltage_113),
+				(e) => Utils.handlePopup(e, entities.pv3_voltage_113),
 				true,
 			)}
 			${createTextWithPopup(
 				'pv3_current',
 				120,
 				94,
-				!config.entities.pv3_current_114 ||
-					config.entities.pv3_current_114 === 'none' ||
+				!entities.pv3_current_114 ||
+					entities.pv3_current_114 === 'none' ||
 					[1, 2].includes(mppts) ||
 					!data.statePV3Current.isValid(),
 				'st3 left-align',
@@ -575,15 +576,15 @@ export const renderSolarElements = (
 					data.statePV3Current.toNum(1),
 					1,
 				)} ${UnitOfElectricalCurrent.AMPERE}`,
-				(e) => Utils.handlePopup(e, config.entities.pv3_current_114),
+				(e) => Utils.handlePopup(e, entities.pv3_current_114),
 				true,
 			)}
 			${createTextWithPopup(
 				'pv4_voltage',
 				372,
 				106,
-				!config.entities.pv4_voltage_115 ||
-					config.entities.pv4_voltage_115 === 'none' ||
+				!entities.pv4_voltage_115 ||
+					entities.pv4_voltage_115 === 'none' ||
 					[1, 2, 3].includes(mppts) ||
 					!data.statePV4Voltage.isValid(),
 				'st3 left-align',
@@ -592,15 +593,15 @@ export const renderSolarElements = (
 					data.statePV4Voltage.toNum(1),
 					1,
 				)} ${UnitOfElectricPotential.VOLT}`,
-				(e) => Utils.handlePopup(e, config.entities.pv4_voltage_115),
+				(e) => Utils.handlePopup(e, entities.pv4_voltage_115),
 				true,
 			)}
 			${createTextWithPopup(
 				'pv4_current',
 				372,
 				94,
-				!config.entities.pv4_current_116 ||
-					config.entities.pv4_current_116 === 'none' ||
+				!entities.pv4_current_116 ||
+					entities.pv4_current_116 === 'none' ||
 					[1, 2, 3].includes(mppts) ||
 					!data.statePV4Current.isValid(),
 				'st3 left-align',
@@ -609,7 +610,7 @@ export const renderSolarElements = (
 					data.statePV4Current.toNum(1),
 					1,
 				)} ${UnitOfElectricalCurrent.AMPERE}`,
-				(e) => Utils.handlePopup(e, config.entities.pv4_current_116),
+				(e) => Utils.handlePopup(e, entities.pv4_current_116),
 				true,
 			)}
 			${createTextWithPopup(
@@ -617,13 +618,13 @@ export const renderSolarElements = (
 				154,
 				45,
 				!data.stateEnvironmentTemp.isValid(),
-				config.entities?.environment_temp ? 'st3 left-align' : 'st12',
+				entities?.environment_temp ? 'st3 left-align' : 'st12',
 				solarColour,
 				`${Utils.formatNumberLocale(data.stateEnvironmentTemp.toNum(1), 1)}°`,
-				(e) => Utils.handlePopup(e, config.entities.environment_temp),
+				(e) => Utils.handlePopup(e, entities.environment_temp),
 				true,
 			)}
-			${config.entities?.pv_total
+			${entities?.pv_total
 				? svg`
                     ${createTextWithPopup(
 											'pvtotal_power',
@@ -633,11 +634,11 @@ export const renderSolarElements = (
 											`${largeFont !== true ? 'st14' : 'st4'} st8`,
 											solarColour,
 											auto_scale
-												? config.entities?.pv_total
+												? entities?.pv_total
 													? `${Utils.convertValueNew(totalPV, data.statePVTotal.getUOM(), decimalPlaces)}`
 													: `${Utils.convertValue(totalPV, decimalPlaces) || 0}`
 												: `${Utils.toNum(totalPV || 0, 0)} ${UnitOfPower.WATT}`,
-											(e) => Utils.handlePopup(e, config.entities.pv_total),
+											(e) => Utils.handlePopup(e, entities.pv_total),
 											true,
 										)}`
 				: svg`
@@ -649,7 +650,7 @@ export const renderSolarElements = (
 											`${largeFont !== true ? 'st14' : 'st4'} st8`,
 											solarColour,
 											auto_scale
-												? config.entities?.pv_total
+												? entities?.pv_total
 													? `${Utils.convertValueNew(totalPV, data.statePVTotal.getUOM(), decimalPlaces)}`
 													: `${Utils.convertValue(totalPV, decimalPlaces) || 0}`
 												: `${Utils.toNum(totalPV || 0, 0)} ${UnitOfPower.WATT}`,
@@ -665,7 +666,7 @@ export const renderSolarElements = (
 				auto_scale
 					? `${Utils.convertValue(data.pv1PowerWatts, decimalPlaces) || 0}`
 					: `${Utils.toNum(data.pv1PowerWatts || 0, 0)} ${UnitOfPower.WATT}`,
-				(e) => Utils.handlePopup(e, config.entities.pv1_power_186),
+				(e) => Utils.handlePopup(e, entities.pv1_power_186),
 				true,
 			)}
 			${createTextWithPopup(
@@ -678,7 +679,7 @@ export const renderSolarElements = (
 				auto_scale
 					? `${Utils.convertValue(data.pv2PowerWatts, decimalPlaces) || 0}`
 					: `${Utils.toNum(data.pv2PowerWatts || 0, 0)} ${UnitOfPower.WATT}`,
-				(e) => Utils.handlePopup(e, config.entities.pv2_power_187),
+				(e) => Utils.handlePopup(e, entities.pv2_power_187),
 				true,
 			)}
 			${createTextWithPopup(
@@ -691,7 +692,7 @@ export const renderSolarElements = (
 				auto_scale
 					? `${Utils.convertValue(data.pv3PowerWatts, decimalPlaces) || 0}`
 					: `${Utils.toNum(data.pv3PowerWatts || 0, 0)} ${UnitOfPower.WATT}`,
-				(e) => Utils.handlePopup(e, config.entities.pv3_power_188),
+				(e) => Utils.handlePopup(e, entities.pv3_power_188),
 				true,
 			)}
 			${createTextWithPopup(
@@ -704,7 +705,7 @@ export const renderSolarElements = (
 				auto_scale
 					? `${Utils.convertValue(data.pv4PowerWatts, decimalPlaces) || 0}`
 					: `${Utils.toNum(data.pv4PowerWatts || 0, 0)} ${UnitOfPower.WATT}`,
-				(e) => Utils.handlePopup(e, config.entities.pv4_power_189),
+				(e) => Utils.handlePopup(e, entities.pv4_power_189),
 				true,
 			)}
 		</svg>

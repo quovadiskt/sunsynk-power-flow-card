@@ -27,6 +27,7 @@ export const renderInverterElements = (
 	} = data;
 
 	const { auto_scale, three_phase } = config.inverter;
+	const entities = config.entities ?? {};
 
 	return html`
 		<!-- Inverter Elements -->
@@ -155,10 +156,7 @@ export const renderInverterElements = (
 								</g>
 							</svg>`,
 			)}
-			<a
-				href="#"
-				@click=${(e) => Utils.handlePopup(e, config.entities.use_timer_248)}
-			>
+			<a href="#" @click=${(e) => Utils.handlePopup(e, entities.use_timer_248)}>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					id="timer"
@@ -214,7 +212,7 @@ export const renderInverterElements = (
 			</a>
 			<a
 				href="#"
-				@click=${(e) => Utils.handlePopup(e, config.entities.priority_load_243)}
+				@click=${(e) => Utils.handlePopup(e, entities.priority_load_243)}
 			>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
@@ -337,80 +335,78 @@ export const renderInverterElements = (
 				'inverter_current_164',
 				180.5,
 				three_phase ? 188 : 199,
-				config.entities.inverter_current_164 === 'none' ||
-					!config.entities.inverter_current_164,
+				entities.inverter_current_164 === 'none' ||
+					!entities.inverter_current_164,
 				`${largeFont !== true ? 'st14' : 'st4'} st8`,
 				inverterColour,
 				`${Utils.formatNumberLocale(
 					data.inverterCurrent,
 					1,
 				)} ${UnitOfElectricalCurrent.AMPERE}`,
-				(e) => Utils.handlePopup(e, config.entities.inverter_current_164),
+				(e) => Utils.handlePopup(e, entities.inverter_current_164),
 				true,
 			)}
 			${createTextWithPopup(
 				'inverter_current_L2',
 				180.5,
 				201,
-				!!(three_phase && config.entities?.inverter_current_L2),
+				!!(three_phase && entities?.inverter_current_L2),
 				`${largeFont !== true ? 'st14' : 'st4'} st8`,
 				inverterColour,
 				`${Utils.formatNumberLocale(
 					data.inverterCurrentL2,
 					1,
 				)} ${UnitOfElectricalCurrent.AMPERE}`,
-				(e) => Utils.handlePopup(e, config.entities.inverter_current_L2),
+				(e) => Utils.handlePopup(e, entities.inverter_current_L2),
 			)}
 			${createTextWithPopup(
 				'inverter_current_L3',
 				180.5,
 				214,
-				!!(three_phase && config.entities?.inverter_current_L3),
+				!!(three_phase && entities?.inverter_current_L3),
 				`${largeFont !== true ? 'st14' : 'st4'} st8`,
 				inverterColour,
 				`${Utils.formatNumberLocale(
 					data.inverterCurrentL3,
 					1,
 				)} ${UnitOfElectricalCurrent.AMPERE}`,
-				(e) => Utils.handlePopup(e, config.entities.inverter_current_L3),
+				(e) => Utils.handlePopup(e, entities.inverter_current_L3),
 			)}
 			${createTextWithPopup(
 				'inverter_power_175',
 				180.5,
 				three_phase ? 174 : 178,
-				config.entities.inverter_power_175 === 'none',
+				entities.inverter_power_175 === 'none',
 				`${largeFont !== true ? 'st14' : 'st4'} st8`,
 				inverterColour,
 				auto_scale
 					? `${Utils.convertValue(data.autoScaledInverterPower, data.decimalPlaces) || 0}`
 					: `${data.autoScaledInverterPower} ${UnitOfPower.WATT}`,
-				(e) => Utils.handlePopup(e, config.entities.inverter_power_175),
+				(e) => Utils.handlePopup(e, entities.inverter_power_175),
 				true,
 			)}
 			${createTextWithPopup(
 				'ac_temp',
 				[4, 5, 6].includes(config.solar?.mppts) && !config.wide ? 110 : 134,
 				[4, 5, 6].includes(config.solar?.mppts) && !config.wide ? 237 : 153,
-				!!(
-					config.entities?.radiator_temp_91 && data.stateRadiatorTemp.isValid()
-				),
+				!!(entities?.radiator_temp_91 && data.stateRadiatorTemp.isValid()),
 				'st3 left-align',
 				inverterColour,
 				`AC: ${Utils.formatNumberLocale(data.stateRadiatorTemp.toNum(1), 1)}°`,
-				(e) => Utils.handlePopup(e, config.entities.radiator_temp_91),
+				(e) => Utils.handlePopup(e, entities.radiator_temp_91),
 			)}
 			${createTextWithPopup(
 				'dc_temp',
 				110,
 				266,
 				!!(
-					config.entities?.dc_transformer_temp_90 &&
+					entities?.dc_transformer_temp_90 &&
 					data.stateDCTransformerTemp.isValid()
 				),
 				'st3 left-align',
 				inverterColour,
 				`DC: ${Utils.formatNumberLocale(data.stateDCTransformerTemp.toNum(1), 1)}°`,
-				(e) => Utils.handlePopup(e, config.entities.dc_transformer_temp_90),
+				(e) => Utils.handlePopup(e, entities.dc_transformer_temp_90),
 			)}
 		</svg>
 	`;

@@ -32,6 +32,7 @@ export const renderBatteryElements = (
 	} = data;
 
 	const { auto_scale, show_absolute } = config.battery;
+	const entities = config.entities ?? {};
 
 	return html`
 		<!-- Battery Elements -->
@@ -185,22 +186,21 @@ export const renderBatteryElements = (
 					93.7,
 					295,
 					!data.stateBatteryTemp.isValid(),
-					config.entities?.battery_temp_182 ? 'st3 left-align' : 'st12',
+					entities?.battery_temp_182 ? 'st3 left-align' : 'st12',
 					batteryColour,
 					`${Utils.formatNumberLocale(data.stateBatteryTemp.toNum(1), 1)}°`,
-					(e) => Utils.handlePopup(e, config.entities.battery_temp_182),
+					(e) => Utils.handlePopup(e, entities.battery_temp_182),
 					true,
 				)}
 				${createTextWithPopup(
 					'battery_soh',
 					93.7,
 					295,
-					!data.stateBatterySOH.isValid() ||
-						!!config.entities?.battery_temp_182,
-					config.entities?.battery_soh ? 'st3 left-align' : 'st12',
+					!data.stateBatterySOH.isValid() || !!entities?.battery_temp_182,
+					entities?.battery_soh ? 'st3 left-align' : 'st12',
 					batteryColour,
 					`${data.stateBatterySOH.toNum(0)}%`,
-					(e) => Utils.handlePopup(e, config.entities.battery_soh),
+					(e) => Utils.handlePopup(e, entities.battery_soh),
 					true,
 				)}
 				${renderText(
@@ -348,22 +348,21 @@ export const renderBatteryElements = (
 					93.7,
 					295,
 					!data.stateBattery2Temp.isValid(),
-					config.entities?.battery2_temp_182 ? 'st3 left-align' : 'st12',
+					entities?.battery2_temp_182 ? 'st3 left-align' : 'st12',
 					battery2Colour,
 					`${Utils.formatNumberLocale(data.stateBattery2Temp.toNum(1), 1)}°`,
-					(e) => Utils.handlePopup(e, config.entities.battery2_temp_182),
+					(e) => Utils.handlePopup(e, entities.battery2_temp_182),
 					true,
 				)}
 				${createTextWithPopup(
 					'battery2_soh',
 					93.7,
 					295,
-					!data.stateBattery2SOH.isValid() ||
-						!!config.entities?.battery2_temp_182,
-					config.entities?.battery2_soh ? 'st3 left-align' : 'st12',
+					!data.stateBattery2SOH.isValid() || !!entities?.battery2_temp_182,
+					entities?.battery2_soh ? 'st3 left-align' : 'st12',
 					battery2Colour,
 					`${data.stateBattery2SOH.toNum(0)}%`,
-					(e) => Utils.handlePopup(e, config.entities.battery2_soh),
+					(e) => Utils.handlePopup(e, entities.battery2_soh),
 					true,
 				)}
 				${renderText(
@@ -465,7 +464,7 @@ export const renderBatteryElements = (
 				<svg
 					id="Battery1_SOC"
 					style="overflow: visible; 
-                        display: ${config.entities.battery_soc_184 === 'none' ||
+                        display: ${entities.battery_soc_184 === 'none' ||
 					!data.stateBatterySoc.isValid()
 						? 'none'
 						: 'inline'};"
@@ -474,7 +473,7 @@ export const renderBatteryElements = (
 						'battery_soc_184',
 						132.5,
 						333,
-						config.entities.battery_soc_184 === 'none' ||
+						entities.battery_soc_184 === 'none' ||
 							!data.stateBatterySoc.isValid(),
 						'st13 st8 left-align',
 						batteryColour,
@@ -485,14 +484,14 @@ export const renderBatteryElements = (
 							: config.battery.hide_soc
 								? data.stateBatterySoc.toDisplay()
 								: `${data.stateBatterySoc.toNum(0)}%`,
-						(e) => Utils.handlePopup(e, config.entities.battery_soc_184),
+						(e) => Utils.handlePopup(e, entities.battery_soc_184),
 						true,
 					)}
 				</svg>
 				<svg
 					id="Battery1_SOC_Program_Capacity"
 					style="overflow: visible; 
-                        display: ${config.entities.battery_soc_184 === 'none' ||
+                        display: ${entities.battery_soc_184 === 'none' ||
 					!data.stateBatterySoc.isValid() ||
 					config.battery.hide_soc ||
 					!data.inverterProg.show
@@ -507,13 +506,13 @@ export const renderBatteryElements = (
 						'st13 st8 left-align',
 						batteryColour,
 						`${data.stateBatterySoc.toNum(0)}% | ${data.inverterProg.capacity || 0}%`,
-						(e) => Utils.handlePopup(e, config.entities.battery_soc_184),
+						(e) => Utils.handlePopup(e, entities.battery_soc_184),
 					)}
 				</svg>
 				<svg
 					id="Battery1_SOC_Shutdown"
 					style="overflow: visible; 
-                        display: ${config.entities.battery_soc_184 !== 'none' &&
+                        display: ${entities.battery_soc_184 !== 'none' &&
 					data.stateBatterySoc.isValid() &&
 					!config.battery.hide_soc &&
 					!data.inverterProg.show &&
@@ -530,7 +529,7 @@ export const renderBatteryElements = (
 						'st13 st8 left-align',
 						batteryColour,
 						`${data.stateBatterySoc.toNum(0)}% | ${batteryShutdown || 0}%`,
-						(e) => Utils.handlePopup(e, config.entities.battery_soc_184),
+						(e) => Utils.handlePopup(e, entities.battery_soc_184),
 					)}
 				</svg>
 				${renderText(
@@ -615,7 +614,7 @@ export const renderBatteryElements = (
 				<svg
 					id="Battery1_SOC"
 					style="overflow: visible; 
-                        display: ${config.entities.battery_soc_184 === 'none' ||
+                        display: ${entities.battery_soc_184 === 'none' ||
 					!data.stateBatterySoc.isValid()
 						? 'none'
 						: 'inline'};"
@@ -624,7 +623,7 @@ export const renderBatteryElements = (
 						'battery_soc_184',
 						258,
 						333,
-						config.entities.battery_soc_184 === 'none' ||
+						entities.battery_soc_184 === 'none' ||
 							!data.stateBatterySoc.isValid(),
 						'st13 st8 right-align',
 						batteryColour,
@@ -635,14 +634,14 @@ export const renderBatteryElements = (
 							: config.battery.hide_soc
 								? data.stateBatterySoc.toDisplay()
 								: `${data.stateBatterySoc.toNum(0)}%`,
-						(e) => Utils.handlePopup(e, config.entities.battery_soc_184),
+						(e) => Utils.handlePopup(e, entities.battery_soc_184),
 						true,
 					)}
 				</svg>
 				<svg
 					id="Battery1_SOC_Program_Capacity"
 					style="overflow: visible; 
-                        display: ${config.entities.battery_soc_184 === 'none' ||
+                        display: ${entities.battery_soc_184 === 'none' ||
 					!data.stateBatterySoc.isValid() ||
 					config.battery.hide_soc ||
 					!data.inverterProg.show
@@ -657,13 +656,13 @@ export const renderBatteryElements = (
 						'st13 st8 right-align',
 						batteryColour,
 						`${data.inverterProg.capacity || 0}% | ${data.stateBatterySoc.toNum(0)}%`,
-						(e) => Utils.handlePopup(e, config.entities.battery_soc_184),
+						(e) => Utils.handlePopup(e, entities.battery_soc_184),
 					)}
 				</svg>
 				<svg
 					id="Battery1_SOC_Shutdown"
 					style="overflow: visible; 
-                        display: ${config.entities.battery_soc_184 !== 'none' &&
+                        display: ${entities.battery_soc_184 !== 'none' &&
 					data.stateBatterySoc.isValid() &&
 					!config.battery.hide_soc &&
 					!data.inverterProg.show &&
@@ -680,7 +679,7 @@ export const renderBatteryElements = (
 						'st13 st8 right-align',
 						batteryColour,
 						`${batteryShutdown || 0}% | ${data.stateBatterySoc.toNum(0)}%`,
-						(e) => Utils.handlePopup(e, config.entities.battery_soc_184),
+						(e) => Utils.handlePopup(e, entities.battery_soc_184),
 					)}
 				</svg>
 				${renderText(
@@ -764,8 +763,8 @@ export const renderBatteryElements = (
 				<svg
 					id="Battery2_SOC"
 					style="overflow: visible; 
-                        display: ${config.entities.battery2_soc_184 ===
-						'none' || !data.stateBattery2Soc.isValid()
+                        display: ${entities.battery2_soc_184 === 'none' ||
+					!data.stateBattery2Soc.isValid()
 						? 'none'
 						: 'inline'};"
 				>
@@ -773,7 +772,7 @@ export const renderBatteryElements = (
 						'battery_soc_184',
 						132,
 						333,
-						config.entities.battery2_soc_184 === 'none' ||
+						entities.battery2_soc_184 === 'none' ||
 							!data.stateBattery2Soc.isValid(),
 						'st13 st8 left-align',
 						battery2Colour,
@@ -784,15 +783,14 @@ export const renderBatteryElements = (
 							: config.battery2.hide_soc
 								? data.stateBattery2Soc.toDisplay()
 								: `${data.stateBattery2Soc.toNum(0)}%`,
-						(e) => Utils.handlePopup(e, config.entities.battery2_soc_184),
+						(e) => Utils.handlePopup(e, entities.battery2_soc_184),
 						true,
 					)}
 				</svg>
 				<svg
 					id="Battery2_SOC_Program_Capacity"
 					style="overflow: visible; 
-                        display: ${config.entities.battery2_soc_184 ===
-						'none' ||
+                        display: ${entities.battery2_soc_184 === 'none' ||
 					!data.stateBattery2Soc.isValid() ||
 					config.battery2.hide_soc ||
 					!data.inverterProg.show
@@ -803,20 +801,19 @@ export const renderBatteryElements = (
 						'battery_soc_184',
 						132,
 						333,
-						config.entities.battery2_soc_184 === 'none' ||
+						entities.battery2_soc_184 === 'none' ||
 							!data.stateBattery2Soc.isValid(),
 						'st13 st8 left-align',
 						battery2Colour,
 						`${data.stateBattery2Soc.toNum(0)}% | ${data.inverterProg.capacity || 0}%`,
-						(e) => Utils.handlePopup(e, config.entities.battery2_soc_184),
+						(e) => Utils.handlePopup(e, entities.battery2_soc_184),
 						true,
 					)}
 				</svg>
 				<svg
 					id="Battery2_SOC_Shutdown"
 					style="overflow: visible; 
-                        display: ${config.entities.battery2_soc_184 !==
-						'none' &&
+                        display: ${entities.battery2_soc_184 !== 'none' &&
 					data.stateBattery2Soc.isValid() &&
 					!config.battery2.hide_soc &&
 					!data.inverterProg.show &&
@@ -829,12 +826,12 @@ export const renderBatteryElements = (
 						'battery_soc_184',
 						132,
 						333,
-						config.entities.battery2_soc_184 === 'none' ||
+						entities.battery2_soc_184 === 'none' ||
 							!data.stateBattery2Soc.isValid(),
 						'st13 st8 left-align',
 						battery2Colour,
 						`${data.stateBattery2Soc.toNum(0)}% | ${batteryShutdown2 || 0}%`,
-						(e) => Utils.handlePopup(e, config.entities.battery2_soc_184),
+						(e) => Utils.handlePopup(e, entities.battery2_soc_184),
 						true,
 					)}
 				</svg>
@@ -854,8 +851,8 @@ export const renderBatteryElements = (
 					cx="136"
 					cy="377"
 					r="3"
-					display="${config.entities?.battery2_status === 'none' ||
-					!config.entities?.battery2_status
+					display="${entities?.battery2_status === 'none' ||
+					!entities?.battery2_status
 						? 'none'
 						: ''}"
 					fill="${data.battery2StateColour}"
@@ -880,8 +877,8 @@ export const renderBatteryElements = (
 					'battery_voltage_183',
 					batteryCount === 2 ? 25 : 41,
 					batteryCount === 2 ? 329.5 : 317,
-					config.entities.battery_voltage_183 === 'none' ||
-						!config.entities.battery_voltage_183,
+					entities.battery_voltage_183 === 'none' ||
+						!entities.battery_voltage_183,
 					batteryCount === 2
 						? 'st3 st8'
 						: largeFont !== true
@@ -889,14 +886,14 @@ export const renderBatteryElements = (
 							: 'st4 st8',
 					batteryColour,
 					`${Utils.formatNumberLocale(data.batteryVoltage, 1)} ${UnitOfElectricPotential.VOLT}`,
-					(e) => Utils.handlePopup(e, config.entities.battery_voltage_183),
+					(e) => Utils.handlePopup(e, entities.battery_voltage_183),
 					true,
 				)}
 				${createTextWithPopup(
 					'battery_power_190',
 					batteryCount === 2 ? 25 : 41,
 					batteryCount === 2 ? 362 : 356,
-					config.entities.battery_power_190 === 'none',
+					entities.battery_power_190 === 'none',
 					batteryCount === 2
 						? 'st3 st8'
 						: largeFont !== true
@@ -915,14 +912,14 @@ export const renderBatteryElements = (
 									? `${Math.abs(batteryPower)} ${UnitOfPower.WATT}`
 									: `${batteryPower || 0} ${UnitOfPower.WATT}`
 							}`,
-					(e) => Utils.handlePopup(e, config.entities.battery_power_190),
+					(e) => Utils.handlePopup(e, entities.battery_power_190),
 					true,
 				)}
 				${createTextWithPopup(
 					'battery_current_191',
 					batteryCount === 2 ? 25 : 41,
 					batteryCount === 2 ? 345.75 : 336,
-					config.entities.battery_current_191 === 'none' ||
+					entities.battery_current_191 === 'none' ||
 						!data.stateBatteryCurrent.isValid(),
 					batteryCount === 2
 						? 'st3 st8'
@@ -936,7 +933,7 @@ export const renderBatteryElements = (
 							: Utils.toNum(data.stateBatteryCurrent.state, 1),
 						1,
 					)} ${UnitOfElectricalCurrent.AMPERE}`,
-					(e) => Utils.handlePopup(e, config.entities.battery_current_191),
+					(e) => Utils.handlePopup(e, entities.battery_current_191),
 					true,
 				)}
 			</svg>
@@ -962,19 +959,19 @@ export const renderBatteryElements = (
 					'battery2_voltage_183',
 					25,
 					329.5,
-					config.entities.battery2_voltage_183 === 'none' ||
-						!config.entities.battery2_voltage_183,
+					entities.battery2_voltage_183 === 'none' ||
+						!entities.battery2_voltage_183,
 					'st3 st8',
 					battery2Colour,
 					`${Utils.formatNumberLocale(data.battery2Voltage, 1)} ${UnitOfElectricPotential.VOLT}`,
-					(e) => Utils.handlePopup(e, config.entities.battery2_voltage_183),
+					(e) => Utils.handlePopup(e, entities.battery2_voltage_183),
 					true,
 				)}
 				${createTextWithPopup(
 					'battery2_power_190',
 					25,
 					362,
-					config.entities.battery2_power_190 === 'none',
+					entities.battery2_power_190 === 'none',
 					'st3 st8',
 					battery2Colour,
 					config.battery2.auto_scale
@@ -991,14 +988,14 @@ export const renderBatteryElements = (
 									? `${Math.abs(battery2Power)} ${UnitOfPower.WATT}`
 									: `${battery2Power || 0} ${UnitOfPower.WATT}`
 							}`,
-					(e) => Utils.handlePopup(e, config.entities.battery2_power_190),
+					(e) => Utils.handlePopup(e, entities.battery2_power_190),
 					true,
 				)}
 				${createTextWithPopup(
 					'battery2_current_191',
 					25,
 					345.75,
-					config.entities.battery2_current_191 === 'none' ||
+					entities.battery2_current_191 === 'none' ||
 						!data.stateBattery2Current.isValid(),
 					'st3 st8',
 					battery2Colour,
@@ -1008,7 +1005,7 @@ export const renderBatteryElements = (
 							: Utils.toNum(data.stateBattery2Current.state, 1),
 						1,
 					)} ${UnitOfElectricalCurrent.AMPERE}`,
-					(e) => Utils.handlePopup(e, config.entities.battery2_current_191),
+					(e) => Utils.handlePopup(e, entities.battery2_current_191),
 					true,
 				)}
 			</svg>
@@ -1021,8 +1018,8 @@ export const renderBatteryElements = (
 						: '8'}"
 				cy="377"
 				r="3"
-				display="${config.entities?.battery_status === 'none' ||
-				!config.entities?.battery_status
+				display="${entities?.battery_status === 'none' ||
+				!entities?.battery_status
 					? 'none'
 					: ''}"
 				fill="${data.batteryStateColour}"
@@ -1078,7 +1075,7 @@ export const renderBatteryElements = (
 						true,
 						data.decimalPlacesEnergy,
 					),
-					(e) => Utils.handlePopup(e, config.entities.day_battery_charge_70),
+					(e) => Utils.handlePopup(e, entities.day_battery_charge_70),
 					true,
 				)}
 				${createTextWithPopup(
@@ -1093,7 +1090,7 @@ export const renderBatteryElements = (
 						true,
 						data.decimalPlacesEnergy,
 					),
-					(e) => Utils.handlePopup(e, config.entities.day_battery_discharge_71),
+					(e) => Utils.handlePopup(e, entities.day_battery_discharge_71),
 					true,
 				)}
 			</svg>

@@ -3,7 +3,7 @@ import { cache } from 'lit/directives/cache.js';
 import { keyed } from 'lit/directives/keyed.js';
 import { DataDto, sunsynkPowerFlowCardConfig } from '../types';
 import { getDynamicStyles } from '../style';
-import { renderSolarElements } from '../components/full/pv/pv_elements';
+import { renderSolarElements } from '../components/full/pv/pv-elements';
 import { renderBatteryElements } from '../components/full/bat/bat-elements';
 import { renderGridElements } from '../components/full/grid/grid-elements';
 import { renderLoadElements } from '../components/full/load/load-elements';

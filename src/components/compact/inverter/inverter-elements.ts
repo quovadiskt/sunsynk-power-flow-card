@@ -23,6 +23,7 @@ export const renderInverterElements = (
 	const { inverterColour, enableAutarky, enableTimer, priorityLoad } = data;
 
 	const { three_phase } = config.inverter;
+	const entities = config.entities ?? {};
 
 	return html`
 		<!-- Inverter Elements -->
@@ -127,10 +128,7 @@ export const renderInverterElements = (
 								</g>
 							</svg>`,
 			)}
-			<a
-				href="#"
-				@click=${(e) => Utils.handlePopup(e, config.entities.use_timer_248)}
-			>
+			<a href="#" @click=${(e) => Utils.handlePopup(e, entities.use_timer_248)}>
 				<svg
 					id="timer"
 					x="267.7"
@@ -184,7 +182,7 @@ export const renderInverterElements = (
 			</a>
 			<a
 				href="#"
-				@click=${(e) => Utils.handlePopup(e, config.entities.priority_load_243)}
+				@click=${(e) => Utils.handlePopup(e, entities.priority_load_243)}
 			>
 				<svg
 					id="pbat"
@@ -319,84 +317,81 @@ export const renderInverterElements = (
 				'inverter_voltage_154',
 				270.2,
 				168.2,
-				config.entities.inverter_voltage_154 === 'none' ||
-					!config.entities.inverter_voltage_154,
+				entities.inverter_voltage_154 === 'none' ||
+					!entities.inverter_voltage_154,
 				'st3 left-align',
 				inverterColour,
 				`${Utils.formatNumberLocale(data.inverterVoltage, 0)}` +
 					`${
-						three_phase && config.entities?.inverter_voltage_L2
+						three_phase && entities?.inverter_voltage_L2
 							? ' | ' + Utils.formatNumberLocale(data.inverterVoltageL2, 0)
 							: ''
 					}` +
 					`${
-						three_phase && config.entities?.inverter_voltage_L3
+						three_phase && entities?.inverter_voltage_L3
 							? ' | ' + Utils.formatNumberLocale(data.inverterVoltageL3, 0)
 							: ''
 					}` +
 					` ${UnitOfElectricPotential.VOLT}`,
-				(e) => Utils.handlePopup(e, config.entities.inverter_voltage_154),
+				(e) => Utils.handlePopup(e, entities.inverter_voltage_154),
 				true,
 			)}
 			${createTextWithPopup(
 				'load_frequency_192',
 				270.2,
 				192.6,
-				config.entities.load_frequency_192 === 'none' ||
-					!config.entities.load_frequency_192,
+				entities.load_frequency_192 === 'none' || !entities.load_frequency_192,
 				'st3 left-align',
 				inverterColour,
 				`${Utils.formatNumberLocale(data.loadFrequency, 2)} Hz`,
-				(e) => Utils.handlePopup(e, config.entities.load_frequency_192),
+				(e) => Utils.handlePopup(e, entities.load_frequency_192),
 				true,
 			)}
 			${createTextWithPopup(
 				'inverter_current_164',
 				270.2,
 				180.4,
-				config.entities.inverter_current_164 === 'none' ||
-					!config.entities.inverter_current_164,
+				entities.inverter_current_164 === 'none' ||
+					!entities.inverter_current_164,
 				'st3 left-align',
 				inverterColour,
 				`${Utils.formatNumberLocale(data.inverterCurrent, 1)}` +
 					`${
-						three_phase && config.entities?.inverter_current_L2
+						three_phase && entities?.inverter_current_L2
 							? ' | ' + Utils.formatNumberLocale(data.inverterCurrentL2, 1)
 							: ''
 					}` +
 					`${
-						three_phase && config.entities?.inverter_current_L3
+						three_phase && entities?.inverter_current_L3
 							? ' | ' + Utils.formatNumberLocale(data.inverterCurrentL3, 1)
 							: ''
 					}` +
 					` ${UnitOfElectricalCurrent.AMPERE}`,
-				(e) => Utils.handlePopup(e, config.entities.inverter_current_164),
+				(e) => Utils.handlePopup(e, entities.inverter_current_164),
 				true,
 			)}
 			${createTextWithPopup(
 				'ac_temp',
 				173,
 				168.2,
-				!!(
-					config.entities?.radiator_temp_91 && data.stateRadiatorTemp.isValid()
-				),
+				!!(entities?.radiator_temp_91 && data.stateRadiatorTemp.isValid()),
 				'st3 left-align',
 				inverterColour,
 				`AC: ${Utils.formatNumberLocale(data.stateRadiatorTemp.toNum(1), 1)}°`,
-				(e) => Utils.handlePopup(e, config.entities.radiator_temp_91),
+				(e) => Utils.handlePopup(e, entities.radiator_temp_91),
 			)}
 			${createTextWithPopup(
 				'dc_temp',
 				173,
 				180.4,
 				!!(
-					config.entities?.dc_transformer_temp_90 &&
+					entities?.dc_transformer_temp_90 &&
 					data.stateDCTransformerTemp.isValid()
 				),
 				'st3 left-align',
 				inverterColour,
 				`DC: ${Utils.formatNumberLocale(data.stateDCTransformerTemp.toNum(1), 1)}°`,
-				(e) => Utils.handlePopup(e, config.entities.dc_transformer_temp_90),
+				(e) => Utils.handlePopup(e, entities.dc_transformer_temp_90),
 				false,
 			)}
 		</svg>

@@ -384,28 +384,6 @@ export class SunSynkCardEditor
 		return undefined;
 	}
 
-	// Produce a safe CSS color for preview chips from any input
-	private _toCssColor(value?: unknown): string | undefined {
-		if (value == null) return undefined;
-		// Allow CSS variables directly
-		if (typeof value === 'string' && value.trim().startsWith('var(')) {
-			return value.trim();
-		}
-		// Prefer hex if we can normalize
-		const hex = this._normalizeColor(value);
-		if (hex) return hex;
-		// Fallback: if it's a string (named color), let the browser try it
-		if (typeof value === 'string') return value;
-		return undefined;
-	}
-
-	// Safely extract a string value from an object by key
-	private static _getStr(obj: unknown, key: string): string | undefined {
-		if (!obj || typeof obj !== 'object') return undefined;
-		const val = (obj as Record<string, unknown>)[key];
-		return typeof val === 'string' ? val : undefined;
-	}
-
 	// Shared color normalization visitor - recursively converts colour values to hex strings
 	private _normalizeColorsInObject(obj: unknown): unknown {
 		if (Array.isArray(obj)) return obj;

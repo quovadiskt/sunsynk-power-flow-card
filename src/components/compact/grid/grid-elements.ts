@@ -85,6 +85,7 @@ export const renderGridElements = (
 	const { auto_scale, invert_flow } = config.grid;
 
 	const { three_phase } = config.inverter;
+	const entities = config.entities ?? {};
 
 	const gridFlowKeyPoints = invert_flow
 		? Utils.invertKeyPoints(totalGridPower < 0 ? '1;0' : '0;1')
@@ -194,7 +195,7 @@ export const renderGridElements = (
                         ${renderGridIcons(data, config)}
                     </a>`
 				: svg`
-                    <a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.grid_connected_status_194)}>
+                    <a href="#" @click=${(e) => Utils.handlePopup(e, entities.grid_connected_status_194)}>
                         ${renderGridIcons(data, config)}
                     </a>`}
 			${config.grid?.navigate
@@ -209,7 +210,7 @@ export const renderGridElements = (
                             </g>
                         </a>`
 				: svg`
-                        <a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.grid_connected_status_194)}>
+                        <a href="#" @click=${(e) => Utils.handlePopup(e, entities.grid_connected_status_194)}>
                             <g display="${config.show_grid && (config.grid.import_icon || config.grid.disconnected_icon || config.grid.export_icon) ? '' : 'none'}">
                                 <foreignObject x="-0.5" y="187.5" width="70" height="70">
                                     <div xmlns="http://www.w3.org/1999/xhtml" style="position: fixed; width: 70px; height: 70px;">
@@ -228,7 +229,7 @@ export const renderGridElements = (
 				'st10 left-align',
 				gridColour,
 				data.stateDayGridImport?.toPowerString(true, data.decimalPlacesEnergy),
-				(e) => Utils.handlePopup(e, config.entities.day_grid_import_76),
+				(e) => Utils.handlePopup(e, entities.day_grid_import_76),
 				true,
 			)}
 			${createTextWithPopup(
@@ -241,7 +242,7 @@ export const renderGridElements = (
 				'st10 left-align',
 				gridColour,
 				data.stateDayGridExport?.toPowerString(true, data.decimalPlacesEnergy),
-				(e) => Utils.handlePopup(e, config.entities.day_grid_export_77),
+				(e) => Utils.handlePopup(e, entities.day_grid_export_77),
 				true,
 			)}
 			${createTextWithPopup(
@@ -250,23 +251,23 @@ export const renderGridElements = (
 				150,
 				!config.show_grid ||
 					!data.stateMaxSellPower.isValid ||
-					!config.entities?.max_sell_power,
+					!entities?.max_sell_power,
 				'st3 left-align',
 				['off', '0'].includes(data.stateSolarSell.state) ? 'grey' : gridColour,
 				`${localize('common.limit')}: ${data.stateMaxSellPower.toPowerString(auto_scale, decimalPlaces)}`,
-				(e) => Utils.handlePopup(e, config.entities.max_sell_power),
+				(e) => Utils.handlePopup(e, entities.max_sell_power),
 				true,
 			)}
 			${three_phase
-				? config.entities?.grid_ct_power_total
+				? entities?.grid_ct_power_total
 					? svg`
-                            <a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.grid_ct_power_total)}>
+                            <a href="#" @click=${(e) => Utils.handlePopup(e, entities.grid_ct_power_total)}>
                             ${renderGridTotalPower(data, config)}
                         </a>`
 					: svg`
                             ${renderGridTotalPower(data, config)}`
 				: svg`
-                    <a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.grid_ct_power_172)}>
+                    <a href="#" @click=${(e) => Utils.handlePopup(e, entities.grid_ct_power_172)}>
                         ${renderGridTotalPower(data, config)}
                     </a>`}
 			${totalGridPower >= 0
@@ -276,14 +277,13 @@ export const renderGridElements = (
 											105,
 											195,
 											!!(
-												config.entities?.energy_cost_buy &&
+												entities?.energy_cost_buy &&
 												data.stateEnergyCostBuy.isValid()
 											),
 											`${!config.show_grid ? 'st12' : 'st3 left-align'}`,
 											gridColour,
 											`${Utils.formatNumberLocale(data.energyCost, 2)} ${data.stateEnergyCostBuy.getUOM()}`,
-											(e) =>
-												Utils.handlePopup(e, config.entities.energy_cost_buy),
+											(e) => Utils.handlePopup(e, entities.energy_cost_buy),
 										)}}`
 				: svg`
                     ${createTextWithPopup(
@@ -291,14 +291,13 @@ export const renderGridElements = (
 											105,
 											195,
 											!!(
-												config.entities?.energy_cost_sell &&
+												entities?.energy_cost_sell &&
 												data.stateEnergyCostSell.isValid()
 											),
 											`${!config.show_grid ? 'st12' : 'st3 left-align'}`,
 											gridColour,
 											`${Utils.formatNumberLocale(data.energyCost, 2)} ${data.stateEnergyCostSell.getUOM()}`,
-											(e) =>
-												Utils.handlePopup(e, config.entities.energy_cost_sell),
+											(e) => Utils.handlePopup(e, entities.energy_cost_sell),
 											false,
 										)}`}
 			${createTextWithPopup(
@@ -306,10 +305,10 @@ export const renderGridElements = (
 				31.5,
 				253,
 				!config.show_grid || !data.statePrepaidUnits.isValid(),
-				config.entities?.prepaid_units ? 'st3' : 'st12',
+				entities?.prepaid_units ? 'st3' : 'st12',
 				gridColour,
 				Utils.formatNumberLocale(data.statePrepaidUnits.toNum(1), 1),
-				(e) => Utils.handlePopup(e, config.entities.prepaid_units),
+				(e) => Utils.handlePopup(e, entities.prepaid_units),
 				true,
 			)}
 			${createTextWithPopup(
@@ -322,31 +321,31 @@ export const renderGridElements = (
 				auto_scale
 					? `${Utils.convertValue(data.gridPower, decimalPlaces) || 0}`
 					: `${data.gridPower || 0} ${UnitOfPower.WATT}`,
-				(e) => Utils.handlePopup(e, config.entities.grid_ct_power_172),
+				(e) => Utils.handlePopup(e, entities.grid_ct_power_172),
 			)}
 			${createTextWithPopup(
 				'grid-power-L2',
 				80,
 				254,
-				!!(three_phase && config.entities?.grid_ct_power_L2),
+				!!(three_phase && entities?.grid_ct_power_L2),
 				!config.show_grid ? 'st12' : 'st3 left-align',
 				gridColour,
 				auto_scale
 					? `${Utils.convertValue(data.gridPowerL2, decimalPlaces) || 0}`
 					: `${data.gridPowerL2 || 0} ${UnitOfPower.WATT}`,
-				(e) => Utils.handlePopup(e, config.entities.grid_ct_power_L2),
+				(e) => Utils.handlePopup(e, entities.grid_ct_power_L2),
 			)}
 			${createTextWithPopup(
 				'grid-power-L3',
 				80,
 				267,
-				!!(three_phase && config.entities?.grid_ct_power_L3),
+				!!(three_phase && entities?.grid_ct_power_L3),
 				!config.show_grid ? 'st12' : 'st3 left-align',
 				gridColour,
 				auto_scale
 					? `${Utils.convertValue(data.gridPowerL3, decimalPlaces) || 0}`
 					: `${data.gridPowerL3 || 0} ${UnitOfPower.WATT}`,
-				(e) => Utils.handlePopup(e, config.entities.grid_ct_power_L3),
+				(e) => Utils.handlePopup(e, entities.grid_ct_power_L3),
 			)}
 		</svg>
 	`;

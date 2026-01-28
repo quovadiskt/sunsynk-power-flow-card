@@ -181,6 +181,14 @@ export class SunsynkPowerFlowCard extends LitElement {
 
 		// If hass changed, compare tracked entity states
 		if (changedProps.has('hass')) {
+			const currentTheme = this.getCurrentThemeName();
+			if (currentTheme !== this._lastTheme) {
+				this._lastTheme = currentTheme;
+				this._colorCache.clear();
+				if (this._isVisible) {
+					return true;
+				}
+			}
 			// Skip hass-driven rerenders while the card is not visible
 			if (!this._isVisible) return false;
 			if (this._trackedEntityIds.size === 0) return true; // nothing tracked yet
@@ -2833,10 +2841,6 @@ export class SunsynkPowerFlowCard extends LitElement {
 
 		const haState = entityString ? this.hass.states[entityString] : undefined;
 
-		// Track entity ids actually used during this render so shouldUpdate can be precise
-		if (entityString) {
-			this._trackedEntityIds.add(entityString);
-		}
 		const converted = (
 			haState !== undefined
 				? convertToCustomEntity(haState, measurement, decimals)
@@ -2910,15 +2914,15 @@ export class SunsynkPowerFlowCard extends LitElement {
 		return this._config.cardstyle == CardStyle.Full;
 	}
 
-	colourConvert(colour: string) {
-		const key = Array.isArray(colour) ? `arr:${colour}` : `str:${colour}`;
+	colourConvert(colour: string | number[] | undefined | null) {
+		const key = Array.isArray(colour) ? `arr:${colour}` : `str:${colour ?? ''}`;
 		const cached = this._colorCache.get(key);
 		if (cached) return cached;
 		let converted: string;
 		if (colour && Array.isArray(colour)) {
 			converted = Utils.toHexColor(`rgb(${colour})`);
 		} else {
-			converted = Utils.toHexColor(colour);
+			converted = Utils.toHexColor(colour ?? '');
 		}
 		this._colorCache.set(key, converted);
 		return converted;
@@ -2999,8 +3003,8 @@ export class SunsynkPowerFlowCard extends LitElement {
 			if (
 				config.show_battery &&
 				config.battery.show_daily &&
-				(!config.entities.day_battery_charge_70 ||
-					!config.entities.day_battery_discharge_71)
+				(!config.entities?.day_battery_charge_70 ||
+					!config.entities?.day_battery_discharge_71)
 			) {
 				throw Error(localize('errors.battery.show_daily'));
 			}
@@ -3016,7 +3020,7 @@ export class SunsynkPowerFlowCard extends LitElement {
 				config.solar &&
 				config.show_solar &&
 				config.solar.show_daily &&
-				!config.entities.day_pv_energy_108
+				!config.entities?.day_pv_energy_108
 			) {
 				throw Error(localize('errors.solar.show_daily'));
 			}
@@ -3026,11 +3030,11 @@ export class SunsynkPowerFlowCard extends LitElement {
 			(config &&
 				config.grid &&
 				config.grid.show_daily_buy &&
-				!config.entities.day_grid_import_76) ||
+				!config.entities?.day_grid_import_76) ||
 			(config &&
 				config.grid &&
 				config.grid.show_daily_sell &&
-				!config.entities.day_grid_export_77)
+				!config.entities?.day_grid_export_77)
 		) {
 			throw Error(localize('errors.grid.show_daily'));
 		}
@@ -3039,11 +3043,11 @@ export class SunsynkPowerFlowCard extends LitElement {
 			(config &&
 				config.entities &&
 				config.entities.essential_power === 'none' &&
-				!config.entities.inverter_power_175) ||
+				!config.entities?.inverter_power_175) ||
 			(config &&
 				config.entities &&
 				config.entities.essential_power === 'none' &&
-				config.entities.inverter_power_175 === 'none')
+				config.entities?.inverter_power_175 === 'none')
 		) {
 			throw Error(localize('errors.essential_power'));
 		}
@@ -3052,7 +3056,7 @@ export class SunsynkPowerFlowCard extends LitElement {
 			config &&
 			config.entities &&
 			config.entities.nonessential_power === 'none' &&
-			!config.entities.grid_power_169
+			!config.entities?.grid_power_169
 		) {
 			throw Error(localize('errors.nonessential_power'));
 		}
@@ -3069,8 +3073,7 @@ export class SunsynkPowerFlowCard extends LitElement {
 			if (
 				attr === 'pv1_power_186' &&
 				config.show_solar &&
-				!config.entities[attr] &&
-				!config.entities[attr]
+				!config.entities?.[attr]
 			) {
 				throw new Error(
 					`${localize('errors.missing_entity')} e.g: ${attr}: sensor.example`,

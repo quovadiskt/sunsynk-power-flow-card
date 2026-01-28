@@ -52,6 +52,7 @@ export const renderLoadElements = (
 		load6_switch,
 		dynamic_colour,
 	} = config.load;
+	const entities = config.entities ?? {};
 
 	return html`
 		<!-- Load Elements -->
@@ -105,7 +106,7 @@ export const renderLoadElements = (
 					'ess_load5_value_extra',
 					config.wide ? 416 : 445,
 					70,
-					!!config.entities?.essential_load5_extra &&
+					!!entities?.essential_load5_extra &&
 						[5, 6].includes(additionalLoad) &&
 						!showAux &&
 						data.stateEssentialLoad5Extra.isValid(),
@@ -115,7 +116,7 @@ export const renderLoadElements = (
 						data.stateEssentialLoad5Extra.toNum(1),
 						1,
 					)} ${data.stateEssentialLoad5Extra?.getUOM()}`,
-					(e) => Utils.handlePopup(e, config.entities.essential_load5_extra),
+					(e) => Utils.handlePopup(e, entities.essential_load5_extra),
 				)}
 				${createTextWithPopup(
 					'ess_load5_value',
@@ -125,7 +126,7 @@ export const renderLoadElements = (
 					'st3',
 					dynamicColourEssentialLoad5,
 					data.stateEssentialLoad5.toPowerString(auto_scale, decimalPlaces),
-					(e) => Utils.handlePopup(e, config.entities.essential_load5),
+					(e) => Utils.handlePopup(e, entities.essential_load5),
 				)}
 			</svg>
 			<svg
@@ -172,7 +173,7 @@ export const renderLoadElements = (
 					'ess_load6_value_extra',
 					config.wide ? 416 : 445,
 					190,
-					!!config.entities?.essential_load6_extra &&
+					!!entities?.essential_load6_extra &&
 						[5, 6].includes(additionalLoad) &&
 						!showAux &&
 						!!config.wide &&
@@ -183,7 +184,7 @@ export const renderLoadElements = (
 						data.stateEssentialLoad6Extra.toNum(1),
 						1,
 					)} ${data.stateEssentialLoad6Extra?.getUOM()}`,
-					(e) => Utils.handlePopup(e, config.entities.essential_load6_extra),
+					(e) => Utils.handlePopup(e, entities.essential_load6_extra),
 				)}
 				${createTextWithPopup(
 					'ess_load6_value',
@@ -193,7 +194,7 @@ export const renderLoadElements = (
 					'st3',
 					dynamicColourEssentialLoad6,
 					data.stateEssentialLoad6.toPowerString(auto_scale, decimalPlaces),
-					(e) => Utils.handlePopup(e, config.entities.essential_load6),
+					(e) => Utils.handlePopup(e, entities.essential_load6),
 				)}
 			</svg>
 			<rect
@@ -356,16 +357,16 @@ export const renderLoadElements = (
 				'load-power-3P',
 				237,
 				142,
-				config.inverter.three_phase && !!config.entities?.load_power_L1,
+				config.inverter.three_phase && !!entities?.load_power_L1,
 				'st3 left-align',
 				loadColour,
-				config.inverter.three_phase && config.entities?.load_power_L1
+				config.inverter.three_phase && entities?.load_power_L1
 					? `${auto_scale ? Utils.convertValue(data.loadPowerL1, decimalPlaces) || 0 : `${data.loadPowerL1 || 0}`}${
-							config.inverter.three_phase && config.entities?.load_power_L2
+							config.inverter.three_phase && entities?.load_power_L2
 								? ` | ${auto_scale ? Utils.convertValue(data.loadPowerL2, decimalPlaces) || 0 : `${data.loadPowerL2 || 0}`}`
 								: ''
 						}${
-							config.inverter.three_phase && config.entities?.load_power_L3
+							config.inverter.three_phase && entities?.load_power_L3
 								? ` | ${auto_scale ? Utils.convertValue(data.loadPowerL3, decimalPlaces) || 0 : `${data.loadPowerL3 || 0}`}`
 								: ''
 						}${auto_scale ? '' : ` ${UnitOfPower.WATT}`}`
@@ -809,7 +810,7 @@ export const renderLoadElements = (
 				'st10 left-align',
 				loadColour,
 				data.stateDayLoadEnergy.toPowerString(true, data.decimalPlacesEnergy),
-				(e) => Utils.handlePopup(e, config.entities.day_load_energy_84),
+				(e) => Utils.handlePopup(e, entities.day_load_energy_84),
 				true,
 			)}
 			${createTextWithPopup(
@@ -820,14 +821,14 @@ export const renderLoadElements = (
 				'st10 left-align',
 				loadColour,
 				data.stateDayLoadEnergy.toPowerString(true, data.decimalPlacesEnergy),
-				(e) => Utils.handlePopup(e, config.entities.day_load_energy_84),
+				(e) => Utils.handlePopup(e, entities.day_load_energy_84),
 				true,
 			)}
 			${createTextWithPopup(
 				'ess_load1_value_extra',
 				416,
 				70,
-				!!config.entities?.essential_load1_extra &&
+				!!entities?.essential_load1_extra &&
 					additionalLoad === 1 &&
 					!showAux &&
 					data.stateEssentialLoad1Extra.isValid(),
@@ -837,13 +838,13 @@ export const renderLoadElements = (
 					data.stateEssentialLoad1Extra.toNum(1),
 					1,
 				)} ${data.stateEssentialLoad1Extra?.getUOM()}`,
-				(e) => Utils.handlePopup(e, config.entities.essential_load1_extra),
+				(e) => Utils.handlePopup(e, entities.essential_load1_extra),
 			)}
 			${createTextWithPopup(
 				'ess_load1_value_extra',
 				360,
 				136,
-				config.entities?.essential_load1_extra &&
+				entities?.essential_load1_extra &&
 					additionalLoad === 1 &&
 					showAux &&
 					data.stateEssentialLoad1Extra.isValid(),
@@ -853,13 +854,13 @@ export const renderLoadElements = (
 					data.stateEssentialLoad1Extra.toNum(1),
 					1,
 				)} ${data.stateEssentialLoad1Extra?.getUOM()}`,
-				(e) => Utils.handlePopup(e, config.entities.essential_load1_extra),
+				(e) => Utils.handlePopup(e, entities.essential_load1_extra),
 			)}
 			${createTextWithPopup(
 				'ess_load1_value_extra',
 				408,
 				70,
-				!!config.entities?.essential_load1_extra &&
+				!!entities?.essential_load1_extra &&
 					[2, 4, 5, 6].includes(additionalLoad) &&
 					!showAux &&
 					data.stateEssentialLoad1Extra.isValid(),
@@ -869,13 +870,13 @@ export const renderLoadElements = (
 					data.stateEssentialLoad1Extra.toNum(1),
 					1,
 				)} ${data.stateEssentialLoad1Extra?.getUOM()}`,
-				(e) => Utils.handlePopup(e, config.entities.essential_load1_extra),
+				(e) => Utils.handlePopup(e, entities.essential_load1_extra),
 			)}
 			${createTextWithPopup(
 				'ess_load2_value_extra',
 				414,
 				70,
-				!!config.entities?.essential_load2_extra &&
+				!!entities?.essential_load2_extra &&
 					[2, 4, 5, 6].includes(additionalLoad) &&
 					!showAux &&
 					data.stateEssentialLoad2Extra.isValid(),
@@ -885,10 +886,9 @@ export const renderLoadElements = (
 					data.stateEssentialLoad2Extra.toNum(1),
 					1,
 				)} ${data.stateEssentialLoad2Extra?.getUOM()}`,
-				(e) => Utils.handlePopup(e, config.entities.essential_load2_extra),
+				(e) => Utils.handlePopup(e, entities.essential_load2_extra),
 			)}
-			${config.entities?.essential_power &&
-			config.entities.essential_power !== 'none'
+			${entities?.essential_power && entities.essential_power !== 'none'
 				? svg`
                     ${createTextWithPopup(
 											'ess_power',
@@ -900,8 +900,7 @@ export const renderLoadElements = (
 											auto_scale
 												? `${Utils.convertValue(essentialPower, decimalPlaces) || 0}`
 												: `${essentialPower || 0} ${UnitOfPower.WATT}`,
-											(e) =>
-												Utils.handlePopup(e, config.entities.essential_power),
+											(e) => Utils.handlePopup(e, entities.essential_power),
 											false,
 										)}`
 				: svg`
@@ -925,7 +924,7 @@ export const renderLoadElements = (
 				`${largeFont !== true ? 'st14' : 'st4'} st8`,
 				dynamicColourEssentialLoad1,
 				data.stateEssentialLoad1.toPowerString(auto_scale, decimalPlaces),
-				(e) => Utils.handlePopup(e, config.entities.essential_load1),
+				(e) => Utils.handlePopup(e, entities.essential_load1),
 			)}
 			${createTextWithPopup(
 				'ess_load2_value',
@@ -936,7 +935,7 @@ export const renderLoadElements = (
 				'st3',
 				dynamicColourEssentialLoad1,
 				data.stateEssentialLoad1.toPowerString(auto_scale, decimalPlaces),
-				(e) => Utils.handlePopup(e, config.entities.essential_load1),
+				(e) => Utils.handlePopup(e, entities.essential_load1),
 			)}
 			${createTextWithPopup(
 				'ess_load2_value',
@@ -947,7 +946,7 @@ export const renderLoadElements = (
 				'st3',
 				dynamicColourEssentialLoad2,
 				data.stateEssentialLoad2.toPowerString(auto_scale, decimalPlaces),
-				(e) => Utils.handlePopup(e, config.entities.essential_load2),
+				(e) => Utils.handlePopup(e, entities.essential_load2),
 			)}
 			${createTextWithPopup(
 				'ess_load3_value',
@@ -958,7 +957,7 @@ export const renderLoadElements = (
 				'st3',
 				dynamicColourEssentialLoad3,
 				data.stateEssentialLoad3.toPowerString(auto_scale, decimalPlaces),
-				(e) => Utils.handlePopup(e, config.entities.essential_load3),
+				(e) => Utils.handlePopup(e, entities.essential_load3),
 			)}
 			${createTextWithPopup(
 				'ess_load4_value',
@@ -969,7 +968,7 @@ export const renderLoadElements = (
 				'st3',
 				dynamicColourEssentialLoad4,
 				data.stateEssentialLoad4.toPowerString(auto_scale, decimalPlaces),
-				(e) => Utils.handlePopup(e, config.entities.essential_load4),
+				(e) => Utils.handlePopup(e, entities.essential_load4),
 			)}
 		</svg>
 	`;

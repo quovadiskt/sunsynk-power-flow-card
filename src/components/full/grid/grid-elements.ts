@@ -80,6 +80,7 @@ export const renderGridElements = (
 	const { auto_scale, invert_flow } = config.grid;
 
 	const { three_phase } = config.inverter;
+	const entities = config.entities ?? {};
 
 	return html`
 		<!-- Grid Elements -->
@@ -145,14 +146,14 @@ export const renderGridElements = (
 					config.battery.hide_soc || config.wide ? 'st3' : 'st12',
 					data.dynamicColourNonEssentialLoad3,
 					data.stateNonessentialLoad3.toPowerString(auto_scale, decimalPlaces),
-					(e) => Utils.handlePopup(e, config.entities.non_essential_load3),
+					(e) => Utils.handlePopup(e, entities.non_essential_load3),
 					true,
 				)}
 				${createTextWithPopup(
 					'non_ess_load3_value_extra',
 					300,
 					305,
-					config.entities?.non_essential_load3_extra &&
+					entities?.non_essential_load3_extra &&
 						nonessentialLoads === 3 &&
 						data.stateNonEssentialLoad3Extra.isValid() &&
 						config.show_grid &&
@@ -164,8 +165,7 @@ export const renderGridElements = (
 						data.stateNonEssentialLoad3Extra.toNum(1),
 						1,
 					)} ${data.stateNonEssentialLoad3Extra?.getUOM()}`,
-					(e) =>
-						Utils.handlePopup(e, config.entities.non_essential_load3_extra),
+					(e) => Utils.handlePopup(e, entities.non_essential_load3_extra),
 				)}
 			</svg>
 			<rect
@@ -287,11 +287,7 @@ export const renderGridElements = (
 			${renderText(
 				'daily_grid_buy',
 				!showNonessential ? '311' : '347',
-				!showNonessential
-					? '368'
-					: config.entities?.max_sell_power
-						? '256'
-						: '253',
+				!showNonessential ? '368' : entities?.max_sell_power ? '256' : '253',
 				data.gridShowDailyBuy !== true,
 				'st3 left-align',
 				gridColour,
@@ -301,11 +297,7 @@ export const renderGridElements = (
 			${renderText(
 				'daily_grid_sell',
 				!showNonessential ? '311' : '347',
-				!showNonessential
-					? '337'
-					: config.entities?.max_sell_power
-						? '225'
-						: '222',
+				!showNonessential ? '337' : entities?.max_sell_power ? '225' : '222',
 				data.gridShowDailySell !== true,
 				'st3 left-align',
 				gridColour,
@@ -488,7 +480,7 @@ export const renderGridElements = (
 							)}
                     </a>`
 				: svg`
-                    <a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.grid_connected_status_194)}>
+                    <a href="#" @click=${(e) => Utils.handlePopup(e, entities.grid_connected_status_194)}>
 							${guard(
 								[
 									data.gridStatus,
@@ -519,7 +511,7 @@ export const renderGridElements = (
                         </g>
                     </a>`
 				: svg`
-                    <a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.grid_connected_status_194)}>
+                    <a href="#" @click=${(e) => Utils.handlePopup(e, entities.grid_connected_status_194)}>
                         <g display="${config.show_grid && (config.grid.import_icon || config.grid.disconnected_icon || config.grid.export_icon) ? '' : 'none'}">
                             ${renderIcon(
 															undefined,
@@ -611,52 +603,44 @@ export const renderGridElements = (
 			${createTextWithPopup(
 				'daily_grid_buy_value',
 				!showNonessential ? '311' : '347',
-				!showNonessential
-					? '354'
-					: config.entities?.max_sell_power
-						? '242'
-						: '239',
+				!showNonessential ? '354' : entities?.max_sell_power ? '242' : '239',
 				data.gridShowDailyBuy !== true || !data.stateDayGridImport.isValid(),
 				'st10 left-align',
 				gridColour,
 				data.stateDayGridImport.toPowerString(true, data.decimalPlacesEnergy),
-				(e) => Utils.handlePopup(e, config.entities.day_grid_import_76),
+				(e) => Utils.handlePopup(e, entities.day_grid_import_76),
 				true,
 			)}
 			${createTextWithPopup(
 				'daily_grid_sell_value',
 				!showNonessential ? '311' : '347',
-				!showNonessential
-					? '323'
-					: config.entities?.max_sell_power
-						? '212'
-						: '209',
+				!showNonessential ? '323' : entities?.max_sell_power ? '212' : '209',
 				data.gridShowDailySell !== true || !data.stateDayGridExport.isValid(),
 				'st10 left-align',
 				gridColour,
 				data.stateDayGridExport.toPowerString(true, data.decimalPlacesEnergy),
-				(e) => Utils.handlePopup(e, config.entities.day_grid_export_77),
+				(e) => Utils.handlePopup(e, entities.day_grid_export_77),
 				true,
 			)}
 			${createTextWithPopup(
 				'max_sell_power',
 				!showNonessential ? '311' : '347',
 				!showNonessential ? '309' : '198',
-				!data.stateMaxSellPower.isValid || !config.entities?.max_sell_power,
+				!data.stateMaxSellPower.isValid || !entities?.max_sell_power,
 				'st3 left-align',
 				['off', '0'].includes(data.stateSolarSell.state) ? 'grey' : gridColour,
 				`${localize('common.limit')}: ${data.stateMaxSellPower.toPowerString(auto_scale, decimalPlaces)}`,
-				(e) => Utils.handlePopup(e, config.entities.max_sell_power),
+				(e) => Utils.handlePopup(e, entities.max_sell_power),
 				true,
 			)}
 			${three_phase
-				? config.entities?.grid_ct_power_total
+				? entities?.grid_ct_power_total
 					? svg`
                         ${createTextWithPopup(
 													'grid_total_power',
 													420,
 													281.5,
-													config.entities.grid_ct_power_172 === 'none',
+													entities.grid_ct_power_172 === 'none',
 													`${largeFont !== true ? 'st14' : 'st4'} st8`,
 													gridColour,
 													auto_scale
@@ -677,10 +661,7 @@ export const renderGridElements = (
 																	: `${totalGridPower || 0} ${UnitOfPower.WATT}`
 															}`,
 													(e) =>
-														Utils.handlePopup(
-															e,
-															config.entities.grid_ct_power_total,
-														),
+														Utils.handlePopup(e, entities.grid_ct_power_total),
 													true,
 												)}`
 					: svg`
@@ -688,7 +669,7 @@ export const renderGridElements = (
 													'grid_total_power',
 													420,
 													281.5,
-													config.entities.grid_ct_power_172 === 'none',
+													entities.grid_ct_power_172 === 'none',
 													`${largeFont !== true ? 'st14' : 'st4'} st8`,
 													gridColour,
 													auto_scale
@@ -715,7 +696,7 @@ export const renderGridElements = (
 											'grid_total_power',
 											420,
 											281.5,
-											config.entities.grid_ct_power_172 === 'none',
+											entities.grid_ct_power_172 === 'none',
 											`${largeFont !== true ? 'st14' : 'st4'} st8`,
 											gridColour,
 											auto_scale
@@ -735,12 +716,10 @@ export const renderGridElements = (
 															? `${Math.abs(totalGridPower)} ${UnitOfPower.WATT}`
 															: `${totalGridPower || 0} ${UnitOfPower.WATT}`
 													}`,
-											(e) =>
-												Utils.handlePopup(e, config.entities.grid_ct_power_172),
+											(e) => Utils.handlePopup(e, entities.grid_ct_power_172),
 											true,
 										)}`}
-			${config.entities?.nonessential_power &&
-			config.entities.nonessential_power !== 'none'
+			${entities?.nonessential_power && entities.nonessential_power !== 'none'
 				? svg`
                     ${createTextWithPopup(
 											'non_ess_power',
@@ -752,11 +731,7 @@ export const renderGridElements = (
 											auto_scale
 												? `${Utils.convertValue(data.nonessentialPower, decimalPlaces) || 0}`
 												: `${data.nonessentialPower || 0} ${UnitOfPower.WATT}`,
-											(e) =>
-												Utils.handlePopup(
-													e,
-													config.entities.nonessential_power,
-												),
+											(e) => Utils.handlePopup(e, entities.nonessential_power),
 											true,
 										)}`
 				: svg`
@@ -774,15 +749,15 @@ export const renderGridElements = (
 										)}`}
 			${totalGridPower >= 0
 				? svg`
-                    <a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.energy_cost_buy)}>
+                    <a href="#" @click=${(e) => Utils.handlePopup(e, entities.energy_cost_buy)}>
                         ${renderText(
 													'energy_cost',
 													414,
 													305,
 													!!(
-														config.entities?.energy_cost_buy &&
+														entities?.energy_cost_buy &&
 														data.stateEnergyCostBuy.isValid() &&
-														!config.entities.non_essential_load2_extra
+														!entities.non_essential_load2_extra
 													),
 													'st3 right-align',
 													gridColour,
@@ -793,9 +768,9 @@ export const renderGridElements = (
 													three_phase ? 414 : 430,
 													305,
 													!!(
-														config.entities?.energy_cost_buy &&
+														entities?.energy_cost_buy &&
 														data.stateEnergyCostBuy.isValid() &&
-														config.entities.non_essential_load2_extra
+														entities.non_essential_load2_extra
 													),
 													three_phase ? 'st3 right-align' : 'st3 left-align',
 													gridColour,
@@ -806,9 +781,9 @@ export const renderGridElements = (
 													three_phase ? 414 : 437,
 													318,
 													!!(
-														config.entities?.energy_cost_buy &&
+														entities?.energy_cost_buy &&
 														data.stateEnergyCostBuy.isValid() &&
-														config.entities.non_essential_load2_extra
+														entities.non_essential_load2_extra
 													),
 													three_phase ? 'st3 right-align' : 'st3 left-align',
 													gridColour,
@@ -816,15 +791,15 @@ export const renderGridElements = (
 												)}
                     </a>`
 				: svg`
-                    <a href="#" @click=${(e) => Utils.handlePopup(e, config.entities.energy_cost_sell)}>
+                    <a href="#" @click=${(e) => Utils.handlePopup(e, entities.energy_cost_sell)}>
                         ${renderText(
 													'energy_cost',
 													414,
 													305,
 													!!(
-														config.entities?.energy_cost_sell &&
+														entities?.energy_cost_sell &&
 														data.stateEnergyCostSell.isValid() &&
-														!config.entities.non_essential_load2_extra
+														!entities.non_essential_load2_extra
 													),
 													'st3 right-align',
 													gridColour,
@@ -835,9 +810,9 @@ export const renderGridElements = (
 													three_phase ? 414 : 430,
 													305,
 													!!(
-														config.entities?.energy_cost_sell &&
+														entities?.energy_cost_sell &&
 														data.stateEnergyCostSell.isValid() &&
-														config.entities.non_essential_load2_extra
+														entities.non_essential_load2_extra
 													),
 													three_phase ? 'st3 right-align' : 'st3 left-align',
 													gridColour,
@@ -848,9 +823,9 @@ export const renderGridElements = (
 													three_phase ? 414 : 437,
 													318,
 													!!(
-														config.entities?.energy_cost_sell &&
+														entities?.energy_cost_sell &&
 														data.stateEnergyCostSell.isValid() &&
-														config.entities.non_essential_load2_extra
+														entities.non_essential_load2_extra
 													),
 													three_phase ? 'st3 right-align' : 'st3 left-align',
 													gridColour,
@@ -861,7 +836,7 @@ export const renderGridElements = (
 				'grid_power_169',
 				270,
 				three_phase ? 216 : 209,
-				config.entities.grid_power_169 === 'none',
+				entities.grid_power_169 === 'none',
 				`${largeFont !== true ? 'st14' : 'st4'} st8`,
 				gridColour,
 				auto_scale
@@ -878,7 +853,7 @@ export const renderGridElements = (
 								? `${Math.abs(autoScaledGridPower)} ${UnitOfPower.WATT}`
 								: `${autoScaledGridPower || 0} ${UnitOfPower.WATT}`
 						}`,
-				(e) => Utils.handlePopup(e, config.entities.grid_power_169),
+				(e) => Utils.handlePopup(e, entities.grid_power_169),
 				true,
 			)}
 			${createTextWithPopup(
@@ -886,10 +861,10 @@ export const renderGridElements = (
 				428,
 				258,
 				!data.statePrepaidUnits.isValid(),
-				config.entities?.prepaid_units ? 'st3 left-align' : 'st12',
+				entities?.prepaid_units ? 'st3 left-align' : 'st12',
 				gridColour,
 				Utils.formatNumberLocale(data.statePrepaidUnits.toNum(1), 1),
-				(e) => Utils.handlePopup(e, config.entities.prepaid_units),
+				(e) => Utils.handlePopup(e, entities.prepaid_units),
 				true,
 			)}
 			${createTextWithPopup(
@@ -902,83 +877,82 @@ export const renderGridElements = (
 				config.load.auto_scale
 					? `${Utils.convertValue(data.gridPower, decimalPlaces) || 0}`
 					: `${data.gridPower || 0} ${UnitOfPower.WATT}`,
-				(e) => Utils.handlePopup(e, config.entities.grid_ct_power_172),
+				(e) => Utils.handlePopup(e, entities.grid_ct_power_172),
 			)}
 			${createTextWithPopup(
 				'grid-power-L2',
 				428,
 				318,
-				!!(three_phase && config.entities?.grid_ct_power_L2),
+				!!(three_phase && entities?.grid_ct_power_L2),
 				'st3 left-align',
 				gridColour,
 				config.load.auto_scale
 					? `${Utils.convertValue(data.gridPowerL2, decimalPlaces) || 0}`
 					: `${data.gridPowerL2 || 0} ${UnitOfPower.WATT}`,
-				(e) => Utils.handlePopup(e, config.entities.grid_ct_power_L2),
+				(e) => Utils.handlePopup(e, entities.grid_ct_power_L2),
 			)}
 			${createTextWithPopup(
 				'grid-power-L3',
 				428,
 				331,
-				!!(three_phase && config.entities?.grid_ct_power_L3),
+				!!(three_phase && entities?.grid_ct_power_L3),
 				'st3 left-align',
 				gridColour,
 				config.load.auto_scale
 					? `${Utils.convertValue(data.gridPowerL3, decimalPlaces) || 0}`
 					: `${data.gridPowerL3 || 0} ${UnitOfPower.WATT}`,
-				(e) => Utils.handlePopup(e, config.entities.grid_ct_power_L3),
+				(e) => Utils.handlePopup(e, entities.grid_ct_power_L3),
 			)}
 			${createTextWithPopup(
 				'inverter_voltage_154',
 				270,
 				three_phase ? 164 : 170.4,
-				config.entities.inverter_voltage_154 === 'none' ||
-					!config.entities.inverter_voltage_154,
+				entities.inverter_voltage_154 === 'none' ||
+					!entities.inverter_voltage_154,
 				`${largeFont !== true ? 'st14' : 'st4'} st8`,
 				gridColour,
 				`${Utils.formatNumberLocale(
 					data.inverterVoltage,
 					1,
 				)} ${UnitOfElectricPotential.VOLT}`,
-				(e) => Utils.handlePopup(e, config.entities.inverter_voltage_154),
+				(e) => Utils.handlePopup(e, entities.inverter_voltage_154),
 				true,
 			)}
 			${createTextWithPopup(
 				'inverter_voltage_L2',
 				270,
 				177,
-				!!(three_phase && config.entities?.inverter_voltage_L2),
+				!!(three_phase && entities?.inverter_voltage_L2),
 				largeFont !== true ? 'st14 st8' : 'st4 st8',
 				gridColour,
 				`${Utils.formatNumberLocale(
 					data.inverterVoltageL2,
 					1,
 				)} ${UnitOfElectricPotential.VOLT}`,
-				(e) => Utils.handlePopup(e, config.entities.inverter_voltage_L2),
+				(e) => Utils.handlePopup(e, entities.inverter_voltage_L2),
 			)}
 			${createTextWithPopup(
 				'inverter_voltage_L3',
 				270,
 				190,
-				!!(three_phase && config.entities?.inverter_voltage_L3),
+				!!(three_phase && entities?.inverter_voltage_L3),
 				largeFont !== true ? 'st14 st8' : 'st4 st8',
 				gridColour,
 				`${Utils.formatNumberLocale(
 					data.inverterVoltageL3,
 					1,
 				)} ${UnitOfElectricPotential.VOLT}`,
-				(e) => Utils.handlePopup(e, config.entities.inverter_voltage_L3),
+				(e) => Utils.handlePopup(e, entities.inverter_voltage_L3),
 			)}
 			${createTextWithPopup(
 				'load_frequency_192',
 				270,
 				three_phase ? '203' : '189.5',
-				config.entities.load_frequency_192 === 'none' ||
-					!config.entities.load_frequency_192,
+				entities.load_frequency_192 === 'none' || !entities.load_frequency_192,
 				`${largeFont !== true ? 'st14' : 'st4'} st8`,
 				gridColour,
 				`${Utils.formatNumberLocale(data.loadFrequency, 2)} Hz`,
-				(e) => Utils.handlePopup(e, config.entities.load_frequency_192),
+				(e) => Utils.handlePopup(e, entities.load_frequency_192),
 				true,
 			)}
 			${createTextWithPopup(
@@ -991,7 +965,7 @@ export const renderGridElements = (
 				'st3',
 				data.dynamicColourNonEssentialLoad1,
 				data.stateNonessentialLoad1.toPowerString(auto_scale, decimalPlaces),
-				(e) => Utils.handlePopup(e, config.entities.non_essential_load1),
+				(e) => Utils.handlePopup(e, entities.non_essential_load1),
 				true,
 			)}
 			${createTextWithPopup(
@@ -1004,7 +978,7 @@ export const renderGridElements = (
 				'st3',
 				data.dynamicColourNonEssentialLoad1,
 				data.stateNonessentialLoad1.toPowerString(auto_scale, decimalPlaces),
-				(e) => Utils.handlePopup(e, config.entities.non_essential_load1),
+				(e) => Utils.handlePopup(e, entities.non_essential_load1),
 				true,
 			)}
 			${createTextWithPopup(
@@ -1017,14 +991,14 @@ export const renderGridElements = (
 				'st3',
 				data.dynamicColourNonEssentialLoad2,
 				data.stateNonessentialLoad2.toPowerString(auto_scale, decimalPlaces),
-				(e) => Utils.handlePopup(e, config.entities.non_essential_load2),
+				(e) => Utils.handlePopup(e, entities.non_essential_load2),
 				true,
 			)}
 			${createTextWithPopup(
 				'non_ess_load1_value_extra',
 				335,
 				305,
-				config.entities?.non_essential_load1_extra &&
+				entities?.non_essential_load1_extra &&
 					[1, 2, 3].includes(nonessentialLoads) &&
 					data.stateNonEssentialLoad1Extra.isValid() &&
 					config.show_grid &&
@@ -1035,13 +1009,13 @@ export const renderGridElements = (
 					data.stateNonEssentialLoad1Extra.toNum(1),
 					1,
 				)} ${data.stateNonEssentialLoad1Extra?.getUOM()}`,
-				(e) => Utils.handlePopup(e, config.entities.non_essential_load1_extra),
+				(e) => Utils.handlePopup(e, entities.non_essential_load1_extra),
 			)}
 			${createTextWithPopup(
 				'non_ess_load2_value_extra',
 				342,
 				305,
-				config.entities?.non_essential_load2_extra &&
+				entities?.non_essential_load2_extra &&
 					[2, 3].includes(nonessentialLoads) &&
 					data.stateNonEssentialLoad2Extra.isValid() &&
 					config.show_grid &&
@@ -1052,7 +1026,7 @@ export const renderGridElements = (
 					data.stateNonEssentialLoad2Extra.toNum(1),
 					1,
 				)} ${data.stateNonEssentialLoad2Extra?.getUOM()}`,
-				(e) => Utils.handlePopup(e, config.entities.non_essential_load2_extra),
+				(e) => Utils.handlePopup(e, entities.non_essential_load2_extra),
 			)}
 		</svg>
 	`;
