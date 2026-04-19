@@ -44,11 +44,12 @@ export const renderSolarElements = (
 			${renderPV('pv2', '254', '54.5', data, config)}
 			${renderPV('pv3', '78', '54.5', data, config)}
 			${renderPV('pv4', '330', '54.5', data, config)}
+
 			<svg
 				id="PV5"
 				style="overflow: visible; display: ${config.show_solar &&
 				config.wide &&
-				[5, 6].includes(mppts)
+				[5, 6, 7, 8].includes(mppts)
 					? 'inline'
 					: 'none'};"
 				x="-10.5%"
@@ -129,11 +130,12 @@ export const renderSolarElements = (
 					true,
 				)}
 			</svg>
+
 			<svg
 				id="PV6"
 				style="overflow: visible; display: ${config.show_solar &&
 				config.wide &&
-				mppts === 6
+				[6, 7, 8].includes(mppts)
 					? 'inline'
 					: 'none'};"
 				x="10.5%"
@@ -214,6 +216,179 @@ export const renderSolarElements = (
 					true,
 				)}
 			</svg>
+
+			<svg
+				id="PV7"
+				style="overflow: visible; display: ${config.show_solar &&
+				config.wide &&
+				[7, 8].includes(mppts)
+					? 'inline'
+					: 'none'};"
+				x="-21%"
+			>
+				${renderPV('pv7', '78', '54.5', data, config)}
+				${renderText(
+					'pv7_name',
+					105,
+					94,
+					true,
+					'st3 st8 right-align',
+					solarColour,
+					config.solar.pv7_name || 'PV7',
+				)}
+				${renderText(
+					'pv7_efficiency',
+					105,
+					106,
+					[0, 1].includes(efficiency),
+					[2, 3].includes(efficiency) ? 'st3 st8 right-align' : 'st12',
+					solarColour,
+					`${data.PV7Efficiency}%`,
+					true,
+				)}
+				${renderPVFlow(
+					'pv7',
+					'M 113 84 L 113 125 Q 113 132 120 132 L 280 132',
+					solarColour,
+					data.pv7LineWidth,
+					data.pv7PowerWatts,
+					durationCur['pv7'],
+					invert_flow,
+					minLineWidth,
+				)}
+				${createTextWithPopup(
+					'pv7_voltage',
+					120,
+					106,
+					!config.entities.pv7_voltage ||
+						config.entities.pv7_voltage === 'none' ||
+						!data.statePV7Voltage.isValid(),
+					'st3 left-align',
+					solarColour,
+					`${Utils.formatNumberLocale(
+						data.statePV7Voltage.toNum(1),
+						1,
+					)} ${UnitOfElectricPotential.VOLT}`,
+					(e) => Utils.handlePopup(e, config.entities.pv7_voltage),
+					true,
+				)}
+				${createTextWithPopup(
+					'pv7_current',
+					120,
+					94,
+					!config.entities.pv7_current ||
+						config.entities.pv7_current === 'none' ||
+						!data.statePV7Current.isValid(),
+					'st3 left-align',
+					solarColour,
+					`${Utils.formatNumberLocale(
+						data.statePV7Current.toNum(1),
+						1,
+					)} ${UnitOfElectricalCurrent.AMPERE}`,
+					(e) => Utils.handlePopup(e, config.entities.pv7_current),
+					true,
+				)}
+				${createTextWithPopup(
+					'pv7_power',
+					113,
+					71,
+					!data.statePV7Power.isValid(),
+					`${largeFont !== true ? 'st14' : 'st4'} st8`,
+					solarColour,
+					auto_scale
+						? `${Utils.convertValue(data.pv7PowerWatts, decimalPlaces) || 0}`
+						: `${Utils.toNum(data.pv7PowerWatts || 0, 0)} ${UnitOfPower.WATT}`,
+					(e) => Utils.handlePopup(e, config.entities.pv7_power),
+					true,
+				)}
+			</svg>
+
+			<svg
+				id="PV8"
+				style="overflow: visible; display: ${config.show_solar &&
+				config.wide &&
+				mppts === 8
+					? 'inline'
+					: 'none'};"
+				x="21%"
+			>
+				${renderPV('pv8', '330', '54.5', data, config)}
+				${renderText(
+					'pv8_name',
+					357,
+					94,
+					true,
+					'st3 st8 right-align',
+					solarColour,
+					config.solar.pv8_name || 'PV8',
+				)}
+				${renderText(
+					'pv8_efficiency',
+					357,
+					106,
+					[0, 1].includes(efficiency),
+					[2, 3].includes(efficiency) ? 'st3 st8 right-align' : 'st12',
+					solarColour,
+					`${data.PV8Efficiency}%`,
+					true,
+				)}
+				${renderPVFlow(
+					'pv8',
+					'M 365 85 L 365 125 Q 365 132 358 132 L 200 132',
+					solarColour,
+					data.pv8LineWidth,
+					data.pv8PowerWatts,
+					durationCur['pv8'],
+					invert_flow,
+					minLineWidth,
+				)}
+				${createTextWithPopup(
+					'pv8_voltage',
+					372,
+					106,
+					!config.entities.pv8_voltage ||
+						config.entities.pv8_voltage === 'none' ||
+						!data.statePV8Voltage.isValid(),
+					'st3 left-align',
+					solarColour,
+					`${Utils.formatNumberLocale(
+						data.statePV8Voltage.toNum(1),
+						1,
+					)} ${UnitOfElectricPotential.VOLT}`,
+					(e) => Utils.handlePopup(e, config.entities.pv8_voltage),
+					true,
+				)}
+				${createTextWithPopup(
+					'pv8_current',
+					372,
+					94,
+					!config.entities.pv8_current ||
+						config.entities.pv8_current === 'none' ||
+						!data.statePV8Current.isValid(),
+					'st3 left-align',
+					solarColour,
+					`${Utils.formatNumberLocale(
+						data.statePV8Current.toNum(1),
+						1,
+					)} ${UnitOfElectricalCurrent.AMPERE}`,
+					(e) => Utils.handlePopup(e, config.entities.pv8_current),
+					true,
+				)}
+				${createTextWithPopup(
+					'pv8_power',
+					366,
+					71,
+					!data.statePV8Power.isValid(),
+					`${largeFont !== true ? 'st14' : 'st4'} st8`,
+					solarColour,
+					auto_scale
+						? `${Utils.convertValue(data.pv8PowerWatts, decimalPlaces) || 0}`
+						: `${Utils.toNum(data.pv8PowerWatts || 0, 0)} ${UnitOfPower.WATT}`,
+					(e) => Utils.handlePopup(e, config.entities.pv8_power),
+					true,
+				)}
+			</svg>
+
 			${renderText(
 				'daily_solar',
 				200,
@@ -242,6 +417,7 @@ export const renderSolarElements = (
 				config.solar.custom_label || localize('common.total_solar_generation'),
 				false,
 			)}
+
 			${renderText(
 				'pv1_name',
 				mppts === 1 ? '230' : '179',
@@ -331,6 +507,7 @@ export const renderSolarElements = (
 				`${data.totalPVEfficiency}%`,
 				true,
 			)}
+
 			${renderPVFlow(
 				'pv1',
 				mppts === 1
@@ -388,6 +565,7 @@ export const renderSolarElements = (
 				mppts === 1 ? 'st12' : '',
 				'1;0',
 			)}
+
 			${config.solar?.navigate
 				? svg`
                     <a href="#" @click=${(e) => Utils.handleNavigation(e, config.solar.navigate)}>
@@ -403,6 +581,7 @@ export const renderSolarElements = (
                         <path fill="${solarColour}"
                             d="${icons.sun}"/>
                     </svg>`}
+
 			<a
 				href="#"
 				@click=${(e) => Utils.handlePopup(e, config.entities.solar_sell_247)}
@@ -448,6 +627,7 @@ export const renderSolarElements = (
 					/>
 				</svg>
 			</a>
+
 			${createTextWithPopup(
 				'daily_solar_value',
 				200,
@@ -478,6 +658,7 @@ export const renderSolarElements = (
 				`${data.stateDayPVEnergy?.toPowerString(true, data.decimalPlacesEnergy)} / ${data.totalSolarGeneration}`,
 				(e) => Utils.handlePopup(e, config.entities.day_pv_energy_108),
 			)}
+
 			${createTextWithPopup(
 				'pv1_voltage',
 				mppts === 1 ? '244.7' : '194',
@@ -612,6 +793,7 @@ export const renderSolarElements = (
 				(e) => Utils.handlePopup(e, config.entities.pv4_current_116),
 				true,
 			)}
+
 			${createTextWithPopup(
 				'environ_temp',
 				154,
@@ -623,6 +805,7 @@ export const renderSolarElements = (
 				(e) => Utils.handlePopup(e, config.entities.environment_temp),
 				true,
 			)}
+
 			${config.entities?.pv_total
 				? svg`
                     ${createTextWithPopup(
@@ -654,7 +837,9 @@ export const renderSolarElements = (
 													: `${Utils.convertValue(totalPV, decimalPlaces) || 0}`
 												: `${Utils.toNum(totalPV || 0, 0)} ${UnitOfPower.WATT}`,
 											true,
-										)}`}
+										)}`
+			}
+
 			${createTextWithPopup(
 				'pv1_power_186',
 				mppts === 1 ? '238.8' : '188.1',
