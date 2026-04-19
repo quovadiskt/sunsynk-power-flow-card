@@ -20,8 +20,11 @@ export function renderPV(
 		pv4: 'PV4Efficiency',
 		pv5: 'PV5Efficiency',
 		pv6: 'PV6Efficiency',
+		pv7: 'PV7Efficiency',
+		pv8: 'PV8Efficiency',
 	};
 	const efficiencyPropertyName = efficiencyMap[id] || 'totalPVEfficiency';
+
 	// Coerce efficiency to a number and clamp to [0, 100] to ensure valid gradient offsets
 	type EfficiencyKey =
 		| 'totalPVEfficiency'
@@ -30,17 +33,22 @@ export function renderPV(
 		| 'PV3Efficiency'
 		| 'PV4Efficiency'
 		| 'PV5Efficiency'
-		| 'PV6Efficiency';
+		| 'PV6Efficiency'
+		| 'PV7Efficiency'
+		| 'PV8Efficiency';
+
 	const effKey = efficiencyPropertyName as EfficiencyKey as keyof DataDto;
 	const efficiencyRaw = data[effKey] as unknown;
 	const parsed =
 		typeof efficiencyRaw === 'number'
 			? efficiencyRaw
 			: parseFloat(String(efficiencyRaw ?? '').replace('%', ''));
+
 	const efficiency = Math.max(
 		0,
 		Math.min(100, Number.isFinite(parsed) ? (parsed as number) : 0),
 	);
+
 	const solarColour = data.solarColour;
 	const useGradient =
 		[1, 3].includes(config.solar.efficiency) && efficiency > 0;
@@ -57,6 +65,10 @@ export function renderPV(
 	} else if (id === 'pv5' && [1, 2, 3, 4].includes(config.solar.mppts)) {
 		className = 'st12';
 	} else if (id === 'pv6' && [1, 2, 3, 4, 5].includes(config.solar.mppts)) {
+		className = 'st12';
+	} else if (id === 'pv7' && [1, 2, 3, 4, 5, 6].includes(config.solar.mppts)) {
+		className = 'st12';
+	} else if (id === 'pv8' && [1, 2, 3, 4, 5, 6, 7].includes(config.solar.mppts)) {
 		className = 'st12';
 	}
 
@@ -76,20 +88,20 @@ export function renderPV(
 			${
 				useGradient
 					? svg`<defs>
-						<linearGradient
-							id="${gradientId}"
-							x1="0%"
-							x2="0%"
-							y1="100%"
-							y2="0%"
-							gradientUnits="objectBoundingBox"
-						>
-							<stop offset="0%" stop-color="${solarColour}" />
-							<stop offset="${efficiency}%" stop-color="${solarColour}" />
-							<stop offset="${efficiency}%" stop-color="grey" />
-							<stop offset="100%" stop-color="grey" />
-						</linearGradient>
-					</defs>`
+							<linearGradient
+								id="${gradientId}"
+								x1="0%"
+								x2="0%"
+								y1="100%"
+								y2="0%"
+								gradientUnits="objectBoundingBox"
+							>
+								<stop offset="0%" stop-color="${solarColour}" />
+								<stop offset="${efficiency}%" stop-color="${solarColour}" />
+								<stop offset="${efficiency}%" stop-color="grey" />
+								<stop offset="100%" stop-color="grey" />
+							</linearGradient>
+						</defs>`
 					: svg``
 			}
 			<rect
