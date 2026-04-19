@@ -77,8 +77,6 @@ export class SunsynkPowerFlowCard extends LitElement {
 	@query('#pv3-flow') pv3Flow?: SVGSVGElement;
 	@query('#pv4-flow') pv4Flow?: SVGSVGElement;
 	@query('#pv5-flow') pv5Flow?: SVGSVGElement;
-	@query('#pv6-flow') pv6Flow?: SVGSVGElement;
-	@query('#pv5-flow') pv5Flow?: SVGSVGElement;
  	@query('#pv6-flow') pv6Flow?: SVGSVGElement;
 	@query('#pv7-flow') pv7Flow?: SVGSVGElement;
 	@query('#pv8-flow') pv8Flow?: SVGSVGElement;
